@@ -1,0 +1,12 @@
+.number {
+    height:800px;
+    width:100px;
+    color: white;
+    margin-left: -50px;
+    margin-top: -800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 24px;
+    
+}

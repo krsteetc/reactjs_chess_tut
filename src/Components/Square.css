@@ -1,0 +1,12 @@
+.Square{
+    height: 100px;
+    width: 100px;
+}
+
+.Square.Dark {
+    background-color:#7f5af0;
+}
+
+.Square.Light {
+    background-color: #fffffe;
+} 

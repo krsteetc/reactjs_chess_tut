@@ -1,0 +1,6 @@
+.Row{
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    width: 800px;
+}
