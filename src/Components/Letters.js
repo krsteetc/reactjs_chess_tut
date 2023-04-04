@@ -5,8 +5,8 @@ function Letters () {
     const letters = ['A','B','C','D','E','F','G','H'] ;
 
     return (
-        <div className='letter' >
-            {letters.map((letter) => <p>{letter}</p>)}
+        <div className='letters' >
+            {letters.map((letter) => <p key={letter}>{letter}</p>)}
         </div>
     )
 }

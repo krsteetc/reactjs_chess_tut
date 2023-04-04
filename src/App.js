@@ -4,13 +4,13 @@ import Numbers from "./Components/Numbers";
 import Letters from "./Components/Letters";
 
 function App() {
-  return (
-      <div className='App'>
-        <Board/>
-          <Numbers/>
-          <Letters/>
-      </div>
-  );
+    return (
+        <div className='App'>
+            <Board/>
+            <Numbers/>
+            <Letters/>
+        </div>
+    );
 }
 
 export default App;
