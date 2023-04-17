@@ -35,6 +35,13 @@ function App() {
         pieces.push({ x: i, y: 2, type: "pawn", color: "white" });
     }
 
+// Empty squares
+    for (let x = 1; x <= 8; x++) {
+        for (let y = 3; y <= 6; y++) {
+            pieces.push({ x: x, y: y, type: "empty" });
+        }
+    }
+
     const isDark = (x,y) =>{
         return (parseInt(x) + parseInt(y)) % 2 === 0;
     }
