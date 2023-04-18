@@ -1,5 +1,6 @@
 import './Board.css'
 import Square from "./Square";
+
 function Board (props) {
 
 
@@ -10,11 +11,15 @@ function Board (props) {
         <div className="board-card">
 
             {horizontalAxis.map((letter) =>
-                verticalAxis.map((number) => <Square
+                verticalAxis.map((number) =>
+                    <Square
                     x={letter}
                     y={number}
                     isDark={props.isDark(letter, number)}
-                    key={`${letter}-${number}`} />)
+                    key={`${letter}-${number}`}
+                    positions={props.positions}
+                    />
+                )
             )}
         </div>
 
