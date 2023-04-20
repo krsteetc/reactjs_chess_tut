@@ -15,7 +15,7 @@ function Board (props) {
                     <Square
                     x={letter}
                     y={number}
-                    isDark={props.isDark(letter, number)}
+                    isSquareDark={props.isSquareDark(letter, number)}
                     key={`${letter}-${number}`}
                     positions={props.positions}
                     />
