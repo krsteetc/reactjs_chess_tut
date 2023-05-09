@@ -13,3 +13,10 @@
 .Square.Light {
     background-color: #fffffe;
 } 
+.Square .Piece {
+    cursor: grab;
+}
+
+.Square .Piece:active {
+    cursor: grabbing;
+}
