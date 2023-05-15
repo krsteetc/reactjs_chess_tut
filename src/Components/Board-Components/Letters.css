@@ -1,0 +1,10 @@
+.letters {
+    width: 800px;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size:24px;
+    text-align: center;
+    user-select: none;
+}
