@@ -8,18 +8,14 @@ function App() {
     let pieces = [];
 
 // Black choechinja
-    pieces.push({ x: 1, y: 8, type: "rook_black" });
-    pieces.push({ x: 1, y: 7, type: "knight_black" });
-    pieces.push({ x: 1, y: 6, type: "bishop_black" });
-    pieces.push({ x: 1, y: 5, type: "queen_black" });
-    pieces.push({ x: 1, y: 4, type: "king_black" });
-    pieces.push({ x: 1, y: 3, type: "bishop_black" });
-    pieces.push({ x: 1, y: 2, type: "knight_black" });
-    pieces.push({ x: 1, y: 1, type: "rook_black" });
-
-    for (let i = 1; i <= 8; i++) {
-        pieces.push({ x: 2, y: i, type: "pawn_black" });
-    }
+    pieces.push({ x: 1, y: 8, type: "rook_black"});
+    pieces.push({ x: 1, y: 7, type: "knight_black"});
+    pieces.push({ x: 1, y: 6, type: "bishop_black"});
+    pieces.push({ x: 1, y: 5, type: "queen_black"});
+    pieces.push({ x: 1, y: 4, type: "king_black"});
+    pieces.push({ x: 1, y: 3, type: "bishop_black"});
+    pieces.push({ x: 1, y: 2, type: "knight_black"});
+    pieces.push({ x: 1, y: 1, type: "rook_black"});
 
     for (let i = 1; i <= 8; i++) {
         pieces.push({ x: 2, y: i, type: "pawn_black"});
@@ -52,7 +48,6 @@ function App() {
 
     return (
     <div className='App'>
-
             <Board isSquareDark={isSquareDark} positions={pieces} />
             <Numbers/>
             <Letters/>
