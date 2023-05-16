@@ -1,7 +1,7 @@
-import './Square.css'
-import Piece from "./Piece";
+import './Square.css';
+import Piece from './Piece';
 
-function Square (props) {
+function Square(props) {
 
     const isSquareDark = props.isSquareDark;
 
@@ -11,8 +11,28 @@ function Square (props) {
     const isEmpty = !piece || piece.type === 'empty';
 
 
+    function SquareClickHandler() {
+        if (!isEmpty) {
+            if (!props.isPieceSelected) {
+                props.onSelectPiece(piece);
+                props.onIsPieceSelected(true);
+            } else {
+                props.onMovePiece(props.selectedPiece,props.x, props.y);
+                props.onIsPieceSelected(false);
+            }
+        } else {
+            if (props.isPieceSelected) {
+                props.onMovePiece(props.selectedPiece,props.x, props.y);
+                props.onIsPieceSelected(false);
+            }
+        }
+    }
+
     return (
-        <div className={`Square ${isSquareDark ? 'Dark' : 'Light'}`}>
+        <div
+            className={`Square ${isSquareDark ? 'Dark' : 'Light'}`}
+            onClick={SquareClickHandler}
+        >
             {!isEmpty && <Piece type={piece.type} />}
         </div>
     );
