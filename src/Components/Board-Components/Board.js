@@ -26,7 +26,11 @@ function Board (props) {
         const moveTo = positions.findIndex(
             (obj) => obj.x === parseInt(x) && obj.y === parseInt(y)
         );
+        const removeFrom = positions.findIndex(
+            (obj) => obj.x === parseInt(piece.x) && obj.y === parseInt(piece.y)
+        );
         const updatedPositions = [...positions];
+        updatedPositions[removeFrom] = { ...updatedPositions[removeFrom], type: "empty" };
         updatedPositions[moveTo] = { ...updatedPositions[moveTo], type: piece.type };
         setPositions(updatedPositions);
     }
