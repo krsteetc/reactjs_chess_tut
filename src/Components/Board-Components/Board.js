@@ -26,9 +26,8 @@ function Board (props) {
         const moveTo = positions.findIndex(
             (obj) => obj.x === parseInt(x) && obj.y === parseInt(y)
         );
-
         const updatedPositions = [...positions];
-        updatedPositions[moveTo] = { ...updatedPositions[moveTo], type: piece };
+        updatedPositions[moveTo] = { ...updatedPositions[moveTo], type: piece.type };
         setPositions(updatedPositions);
     }
 
@@ -40,8 +39,8 @@ function Board (props) {
             {horizontalAxis.map((letter) =>
                 verticalAxis.map((number) =>
                     <Square
-                    x={letter}
-                    y={number}
+                    x={number}
+                    y={letter}
                     isSquareDark={props.isSquareDark(letter, number)}
                     key={`${letter}-${number}`}
                     positions={positions}
