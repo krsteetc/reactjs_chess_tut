@@ -14,13 +14,15 @@ function Board (props) {
 
     const [positions, setPositions] = useState(props.positions)
 
+
     function selectPiece(piece){
-        setSelectedPiece(piece)
+        setSelectedPiece(piece);
     }
 
     function isSelected (isTrue) {
-        setIsPieceSelected(isTrue)
+        setIsPieceSelected(isTrue);
     }
+
 
     function movePiece(piece, x, y) {
         const moveTo = positions.findIndex(
@@ -40,8 +42,8 @@ function Board (props) {
     return (
         <div className="board-card">
 
-            {horizontalAxis.map((letter) =>
-                verticalAxis.map((number) =>
+            {verticalAxis.map((letter) =>
+                horizontalAxis.map((number) =>
                     <Square
                     x={number}
                     y={letter}

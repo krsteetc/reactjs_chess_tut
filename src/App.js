@@ -8,31 +8,31 @@ function App() {
     let pieces = [];
 
 // Black choechinja
-    pieces.push({ x: 8, y: 1, type: "rook_black"});
-    pieces.push({ x: 7, y: 1, type: "knight_black"});
-    pieces.push({ x: 6, y: 1, type: "bishop_black"});
-    pieces.push({ x: 5, y: 1, type: "queen_black"});
-    pieces.push({ x: 4, y: 1, type: "king_black"});
-    pieces.push({ x: 3, y: 1, type: "bishop_black"});
-    pieces.push({ x: 2, y: 1, type: "knight_black"});
-    pieces.push({ x: 1, y: 1, type: "rook_black"});
+    pieces.push({ x: 8, y: 1, type: "rook_black",highlighted: false});
+    pieces.push({ x: 7, y: 1, type: "knight_black",highlighted: false});
+    pieces.push({ x: 6, y: 1, type: "bishop_black",highlighted: false});
+    pieces.push({ x: 5, y: 1, type: "queen_black",highlighted: false});
+    pieces.push({ x: 4, y: 1, type: "king_black",highlighted: false});
+    pieces.push({ x: 3, y: 1, type: "bishop_black",highlighted: false});
+    pieces.push({ x: 2, y: 1, type: "knight_black",highlighted: false});
+    pieces.push({ x: 1, y: 1, type: "rook_black",highlighted: false});
 
     for (let i = 1; i <= 8; i++) {
-        pieces.push({ x: i, y: 2, type: "pawn_black"});
+        pieces.push({ x: i, y: 2, type: "pawn_black",highlighted: false});
     }
 
 // White choechinja
-    pieces.push({ x: 1, y: 8, type: "rook_white"});
-    pieces.push({ x: 2, y: 8, type: "knight_white"});
-    pieces.push({ x: 3, y: 8, type: "bishop_white"});
-    pieces.push({ x: 4, y: 8, type: "queen_white"});
-    pieces.push({ x: 5, y: 8, type: "king_white"});
-    pieces.push({ x: 6, y: 8, type: "bishop_white"});
-    pieces.push({ x: 7, y: 8, type: "knight_white"});
-    pieces.push({ x: 8, y: 8, type: "rook_white"});
+    pieces.push({ x: 1, y: 8, type: "rook_white",highlighted: false});
+    pieces.push({ x: 2, y: 8, type: "knight_white",highlighted: false});
+    pieces.push({ x: 3, y: 8, type: "bishop_white",highlighted: false});
+    pieces.push({ x: 4, y: 8, type: "queen_white",highlighted: false});
+    pieces.push({ x: 5, y: 8, type: "king_white",highlighted: false});
+    pieces.push({ x: 6, y: 8, type: "bishop_white",highlighted: false});
+    pieces.push({ x: 7, y: 8, type: "knight_white",highlighted: false});
+    pieces.push({ x: 8, y: 8, type: "rook_white",highlighted: false});
 
     for (let i = 1; i <= 8; i++) {
-        pieces.push({ x: i, y: 7, type: "pawn_white"});
+        pieces.push({ x: i, y: 7, type: "pawn_white",highlighted: false});
     }
 
 // Empty squares
@@ -49,7 +49,7 @@ function App() {
 
     return (
     <div className='App'>
-            <Board isSquareDark={isSquareDark} positions={pieces} />
+            <Board isSquareDark={isSquareDark} positions={pieces}  />
             <Numbers/>
             <Letters/>
         </div>

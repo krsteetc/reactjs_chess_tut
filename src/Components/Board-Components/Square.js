@@ -34,6 +34,7 @@ function Square(props) {
             onClick={SquareClickHandler}
         >
             {!isEmpty && <Piece type={piece.type} />}
+
         </div>
     );
 }
