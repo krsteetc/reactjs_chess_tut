@@ -14,6 +14,36 @@ function Board (props) {
 
     const [positions, setPositions] = useState(props.positions)
 
+    function generateFEN(positions) {
+        let fen = "";
+        let emptyCounter = 0;
+
+        for (let i = 8; i > 0; i--) {
+            for (let j = 1; j <= 8; j++) {
+                let currentSquare = positions.find(
+                    (p) => p.x === j && p.y === i
+                );
+                if (currentSquare.type === "empty") {
+                    emptyCounter += 1;
+                } else {
+                    if (emptyCounter !== 0) {
+                        fen += emptyCounter.toString();
+                        emptyCounter = 0;
+                    }
+                    fen += currentSquare.type[0].toUpperCase();
+                }
+            }
+            if (emptyCounter !== 0) {
+                fen += emptyCounter.toString();
+                emptyCounter = 0;
+            }
+            if (i > 1) {
+                fen += "/";
+            }
+        }
+        console.log(fen);
+    }
+
     function selectPiece(piece){
         setSelectedPiece(piece);
     }
@@ -31,6 +61,7 @@ function Board (props) {
         updatedPositions[removeFrom] = { ...updatedPositions[removeFrom], type: "empty" };
         updatedPositions[moveTo] = { ...updatedPositions[moveTo], type: piece.type };
         setPositions(updatedPositions);
+        generateFEN(updatedPositions)
     }
 
     return (
@@ -52,7 +83,6 @@ function Board (props) {
                 )
             )}
         </div>
-
     );
 }
 export default Board;
