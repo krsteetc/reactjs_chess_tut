@@ -14,7 +14,7 @@ function Square(props) {
     function SquareClickHandler() {
         if (!isEmpty) {
             if (!props.isPieceSelected) {
-                props.onSelectPiece(piece);
+                props.onSelectPiece(piece,props.x, props.y);
                 props.onIsPieceSelected(true);
             } else {
                 props.onMovePiece(props.selectedPiece,props.x, props.y);
@@ -30,11 +30,16 @@ function Square(props) {
 
     return (
         <div
-            className={`Square ${isSquareDark ? 'Dark' : 'Light'}`}
+            className={`Square ${isSquareDark ? "Dark" : "Light"} ${
+                props.selectedPiece &&
+                props.selectedPiece.x === parseInt(props.x) &&
+                props.selectedPiece.y === parseInt(props.y)
+                    ? "Highlighted"
+                    : ""
+            }`}
             onClick={SquareClickHandler}
         >
             {!isEmpty && <Piece type={piece.type} />}
-
         </div>
     );
 }

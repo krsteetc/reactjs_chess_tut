@@ -6,6 +6,10 @@
     align-items: center;
 }
 
+.Square:hover{
+    box-shadow: 0 0 10px #cbf05a;
+}
+
 .Square.Dark {
     background-color:#7f5af0;
 }
@@ -14,3 +18,8 @@
     background-color: #fffffe;
 }
 
+.Square.Highlighted {
+    background-color: #cbf05a;
+    box-shadow: 0 0 4px #cbf05a;
+    transition: background-color 0.4s ease;
+}

@@ -4,8 +4,8 @@ import {useState} from "react";
 
 function Board (props) {
 
-
     const verticalAxis = ['8','7','6','5','4','3','2','1'] ;
+
     const horizontalAxis = ['1','2','3','4','5','6','7','8'];
 
     const [selectedPiece, setSelectedPiece] = useState(null);
@@ -14,16 +14,12 @@ function Board (props) {
 
     const [positions, setPositions] = useState(props.positions)
 
-
     function selectPiece(piece){
         setSelectedPiece(piece);
     }
-
     function isSelected (isTrue) {
         setIsPieceSelected(isTrue);
     }
-
-
     function movePiece(piece, x, y) {
         const moveTo = positions.findIndex(
             (obj) => obj.x === parseInt(x) && obj.y === parseInt(y)
@@ -37,11 +33,8 @@ function Board (props) {
         setPositions(updatedPositions);
     }
 
-
-
     return (
         <div className="board-card">
-
             {verticalAxis.map((letter) =>
                 horizontalAxis.map((number) =>
                     <Square
