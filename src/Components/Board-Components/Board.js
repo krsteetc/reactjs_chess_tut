@@ -30,7 +30,12 @@ function Board (props) {
                         fen += emptyCounter.toString();
                         emptyCounter = 0;
                     }
-                    fen += currentSquare.type[0].toUpperCase();
+                    if (currentSquare.type[0] ==='k' && currentSquare.type[1] ==='n') {
+                        fen += currentSquare.type[1].toUpperCase()
+                    }
+                    else{
+                        fen += currentSquare.type[0].toUpperCase();
+                    }
                 }
             }
             if (emptyCounter !== 0) {
