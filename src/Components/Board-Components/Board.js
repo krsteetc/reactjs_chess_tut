@@ -16,10 +16,13 @@ function Board (props) {
 
     function selectPiece(piece){
         setSelectedPiece(piece)
+        console.log("selectPiece e ova")
     }
 
     function isSelected (isTrue) {
-        setIsPieceSelected(isTrue)
+        setIsPieceSelected(isTrue);
+        console.log("isSelected e ova")
+        // Square.style.background = "green";
     }
 
     function movePiece(piece, x, y) {
@@ -35,7 +38,9 @@ function Board (props) {
         setPositions(updatedPositions);
     }
 
-
+    // function selectBackground() {
+    //     if(isSelected) {`{background = "green"}`}
+    // }
 
     return (
         <div className="board-card">
@@ -53,6 +58,9 @@ function Board (props) {
                     selectedPiece={selectedPiece}
                     isPieceSelected={isPieceSelected}
                     onMovePiece={movePiece}
+                    style = {{
+                        backgroundColor: isSelected ? 'red' : 'blue',
+                    }}
                     />
                 )
             )}
