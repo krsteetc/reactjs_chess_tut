@@ -5,7 +5,23 @@ import Letters from "./Components/Board-Components/Letters";
 
 function App() {
 
-    let pieces = [];
+    //name them squares
+    //make them 64
+    //rename x and y to files and ranks
+
+    for (let x = 1; x <= 8; x++) {
+        for (let y = 1; y <= 1; y++) {
+            pieces.push({ x: x, y: y, type: "empty"});
+            //set bg color, set peice, isSelected, is valid
+        }
+    }
+    //do tuka imas prazna tabla
+
+    //nad ova, dodavash pozicija kakva sto sakash
+    pieces. ({ x: 8, y: 8, type: "rook_black"});
+
+    let pieces = []; //not 64 :(
+    //not squares :)
 
 // Black choechinja
     pieces.push({ x: 8, y: 8, type: "rook_black"});
