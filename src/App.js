@@ -5,67 +5,54 @@ import Letters from "./Components/Board-Components/Letters";
 
 function App() {
 
-    //name them squares
-    //make them 64
-    //rename x and y to files and ranks
-
-    for (let x = 1; x <= 8; x++) {
-        for (let y = 1; y <= 1; y++) {
-            pieces.push({ x: x, y: y, type: "empty"});
-            //set bg color, set peice, isSelected, is valid
-        }
-    }
-    //do tuka imas prazna tabla
-
-    //nad ova, dodavash pozicija kakva sto sakash
-    pieces. ({ x: 8, y: 8, type: "rook_black"});
-
-    let pieces = []; //not 64 :(
-    //not squares :)
-
-// Black choechinja
-    pieces.push({ x: 8, y: 8, type: "rook_black"});
-    pieces.push({ x: 7, y: 8, type: "knight_black"});
-    pieces.push({ x: 6, y: 8, type: "bishop_black"});
-    pieces.push({ x: 5, y: 8, type: "queen_black"});
-    pieces.push({ x: 4, y: 8, type: "king_black"});
-    pieces.push({ x: 3, y: 8, type: "bishop_black"});
-    pieces.push({ x: 2, y: 8, type: "knight_black"});
-    pieces.push({ x: 1, y: 8, type: "rook_black"});
-
-    for (let i = 1; i <= 8; i++) {
-        pieces.push({ x: i, y: 7, type: "pawn_black"});
-    }
-
-// White choechinja
-    pieces.push({ x: 1, y: 1, type: "rook_white"});
-    pieces.push({ x: 2, y: 1, type: "knight_white"});
-    pieces.push({ x: 3, y: 1, type: "bishop_white"});
-    pieces.push({ x: 4, y: 1, type: "queen_white"});
-    pieces.push({ x: 5, y: 1, type: "king_white"});
-    pieces.push({ x: 6, y: 1, type: "bishop_white"});
-    pieces.push({ x: 7, y: 1, type: "knight_white"});
-    pieces.push({ x: 8, y: 1, type: "rook_white"});
-
-    for (let i = 1; i <= 8; i++) {
-        pieces.push({ x: i, y: 2, type: "pawn_white"});
-    }
-
-// Empty squares
-    for (let x = 1; x <= 8; x++) {
-        for (let y = 3; y <= 6; y++) {
-            pieces.push({ x: x, y: y, type: "empty"});
-
+    let squares = [];
+    for (let i = 8; i >= 1; i--) {
+        for (let j = 1; j <= 8; j++) {
+            squares.push({
+                x: j,
+                y: i,
+                type: 'empty',
+                isSelected: false,
+                isEmpty: true,
+                isDark: (j + i) % 2 === 0 ? true : false,
+            });
         }
     }
 
-    const isSquareDark = (x,y) =>{
-        return (parseInt(x) + parseInt(y)) % 2 === 0;
+    squares[0].type = 'rook_black';  //Black pieces
+    squares[1].type = 'knight_black';
+    squares[2].type = 'bishop_black';
+    squares[3].type = 'queen_black';
+    squares[4].type = 'king_black';
+    squares[5].type = 'bishop_black';
+    squares[6].type = 'knight_black';
+    squares[7].type = 'rook_black';
+
+    for (let j = 0; j < 8; j++) {
+        squares[j + 8].type = 'pawn_black';
+        squares[j + 8].isEmpty = false;
+        squares[j].isEmpty = false;
     }
+
+    squares[56].type = 'rook_white';  //White pieces
+    squares[57].type = 'knight_white';
+    squares[58].type = 'bishop_white';
+    squares[59].type = 'queen_white';
+    squares[60].type = 'king_white';
+    squares[61].type = 'bishop_white';
+    squares[62].type = 'knight_white';
+    squares[63].type = 'rook_white';
+
+    for (let j = 0; j < 8; j++) {
+        squares[j + 48].type = 'pawn_white';
+        squares[j + 48].isEmpty = false;
+        squares[j + 56].isEmpty = false;
+    }
+
 
     return (
-    <div className='App'>
-            <Board isSquareDark={isSquareDark} positions={pieces} />
+        <div className='App'>
+            <Board squares={squares} />
             <Numbers/>
             <Letters/>
         </div>

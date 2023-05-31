@@ -3,34 +3,48 @@ import Piece from './Piece';
 
 function Square(props) {
 
-    const isSquareDark = props.isSquareDark;
-
-    const piece = props.positions.find(
-        (p) => p.x === parseInt(props.x) && p.y === parseInt(props.y)
+    const piece = props.squares.find(
+        (p) => p.x === props.x && p.y === props.y
     );
     const isEmpty = !piece || piece.type === 'empty';
+
+    function selectPieceHandler (piece) {
+        props.onSelectPiece(piece)
+    }
+    function SetIsPieceSelectedHandler (isTrue) {
+        props.onSetIsPieceSelected(isTrue)
+    }
+
+    function movePiece (x,y) {
+        props.onMovePiece(x,y)
+    }
+
 
 
     function SquareClickHandler() {
         if (!isEmpty) {
-            if (!props.isPieceSelected) {
-                props.onSelectPiece(piece,props.x, props.y);
-                props.onIsPieceSelected(true);
+            if (!props.isSelected) {
+                selectPieceHandler(piece);
+                SetIsPieceSelectedHandler(true);
             } else {
-                props.onMovePiece(props.selectedPiece,props.x, props.y);
-                props.onIsPieceSelected(false);
+                movePiece(props.x, props.y);
+                selectPieceHandler(null);
+                SetIsPieceSelectedHandler(false);
             }
         } else {
-            if (props.isPieceSelected) {
-                props.onMovePiece(props.selectedPiece,props.x, props.y);
-                props.onIsPieceSelected(false);
+            if (props.isSelected) {
+                movePiece(props.x, props.y);
+                selectPieceHandler(null);
+                SetIsPieceSelectedHandler(false);
             }
         }
     }
 
+
+
     return (
         <div
-            className={`Square ${isSquareDark ? "Dark" : "Light"} ${
+            className={`Square ${props.isSquareDark ? "Dark" : "Light"} ${
                 props.selectedPiece &&
                 props.selectedPiece.x === parseInt(props.x) &&
                 props.selectedPiece.y === parseInt(props.y)

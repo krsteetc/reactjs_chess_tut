@@ -4,23 +4,19 @@ import {useState} from "react";
 
 function Board (props) {
 
-    const verticalAxis = ['8','7','6','5','4','3','2','1'] ;
-
-    const horizontalAxis = ['1','2','3','4','5','6','7','8'];
-
     const [selectedPiece, setSelectedPiece] = useState(null);
 
-    const [isPieceSelected,setIsPieceSelected] = useState(false);
+    const [isSelected, setIsSelected] = useState(false);
 
-    const [positions, setPositions] = useState(props.positions)
+     const [squares, setSquares] = useState(props.squares)
 
-    function generateFEN(positions) {
+    function generateFEN(squares) {
         let fen = "";
         let emptyCounter = 0;
 
         for (let i = 8; i > 0; i--) {
             for (let j = 1; j <= 8; j++) {
-                let currentSquare = positions.find(
+                let currentSquare = props.squares.find(
                     (p) => p.x === j && p.y === i
                 );
                 if (currentSquare.type === "empty") {
@@ -52,40 +48,40 @@ function Board (props) {
     function selectPiece(piece){
         setSelectedPiece(piece);
     }
-    function isSelected (isTrue) {
-        setIsPieceSelected(isTrue);
+    function isPieceSelected(isTrue) {
+       setIsSelected(isTrue);
     }
-    function movePiece(piece, x, y) {
-        const moveTo = positions.findIndex(
-            (obj) => obj.x === parseInt(x) && obj.y === parseInt(y)
-        );
-        const removeFrom = positions.findIndex(
-            (obj) => obj.x === parseInt(piece.x) && obj.y === parseInt(piece.y)
-        );
-        const updatedPositions = [...positions];
-        updatedPositions[removeFrom] = { ...updatedPositions[removeFrom], type: "empty" };
-        updatedPositions[moveTo] = { ...updatedPositions[moveTo], type: piece.type };
-        setPositions(updatedPositions);
-        generateFEN(updatedPositions)
+
+    function movePiece(x,y) {
+        const moveTo = squares.findIndex((obj) => obj.x === x && obj.y === y);
+        const removeFrom = squares.findIndex((obj) => obj.x === selectedPiece.x && obj.y === selectedPiece.y);
+
+        const updatedSquares = [...squares];
+        updatedSquares[moveTo] = { ...updatedSquares[moveTo], type: selectedPiece.type };
+        updatedSquares[removeFrom] = { ...updatedSquares[removeFrom], type: 'empty' };
+
+        setSquares(updatedSquares);
     }
+
+
 
     return (
         <div className="board-card">
-            {verticalAxis.map((letter) =>
-                horizontalAxis.map((number) =>
-                    <Square
-                    x={number}
-                    y={letter}
-                    isSquareDark={props.isSquareDark(letter, number)}
-                    key={`${letter}-${number}`}
-                    positions={positions}
+            {props.squares.map(
+                (square) => <Square
+                    x={square.x}
+                    y={square.y}
+                    type={square.type}
+                    isEmpty={square.isEmpty}
+                    isSelected={isSelected}
+                    key={`${square.x}-${square.y}`}
+                    squares={squares}
                     onSelectPiece={selectPiece}
-                    onIsPieceSelected={isSelected}
-                    selectedPiece={selectedPiece}
-                    isPieceSelected={isPieceSelected}
+                    onSetIsPieceSelected={isPieceSelected}
                     onMovePiece={movePiece}
-                    />
-                )
+                    isSquareDark={square.isDark}
+                    selectedPiece={selectedPiece}
+                />
             )}
         </div>
     );
