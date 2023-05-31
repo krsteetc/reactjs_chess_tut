@@ -3,6 +3,7 @@ import './App.css';
 import Numbers from "./Components/Board-Components/Numbers";
 import Letters from "./Components/Board-Components/Letters";
 import {useState} from "react";
+import FEN from "./Components/FEN-Components/FEN";
 
 function App() {
 
@@ -50,10 +51,59 @@ function App() {
         squares[j + 56].isEmpty = false;
     }
 
-    const [positions, setPositions] = useState(squares)
+    function generateFEN(squares) {
+        let fen = "";
+        let emptyCounter = 0;
+
+        for (let i = 8; i > 0; i--) {
+            for (let j = 1; j <= 8; j++) {
+                let currentSquare = squares.find(
+                    (p) => p.x === j && p.y === i
+                );
+                if (currentSquare.type === "empty") {
+                    emptyCounter += 1;
+                } else {
+                    if (emptyCounter !== 0) {
+                        fen += emptyCounter.toString();
+                        emptyCounter = 0;
+                    }
+                    if (currentSquare.type.split('_')[1] === 'white'){
+                        if (currentSquare.type[0] ==='k' && currentSquare.type[1] ==='n') {
+                            fen += currentSquare.type[1].toUpperCase()
+                        }
+                        else{
+                            fen += currentSquare.type[0].toUpperCase();
+                        }
+                    }
+                    else {
+                        if (currentSquare.type[0] ==='k' && currentSquare.type[1] ==='n') {
+                            fen += currentSquare.type[1]
+                        }
+                        else{
+                            fen += currentSquare.type[0]
+                        }
+                    }
+                }
+            }
+            if (emptyCounter !== 0) {
+                fen += emptyCounter.toString();
+                emptyCounter = 0;
+            }
+            if (i > 1) {
+                fen += "/";
+            }
+        }
+        setFen(fen)
+    }
+
+    const [positions, setPositions] = useState(squares);
+
+    const [fen, setFen] = useState('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR');
+
 
     function movePiece (updatedSquares) {
         setPositions(updatedSquares);
+        generateFEN(updatedSquares);
     }
 
 
@@ -62,6 +112,7 @@ function App() {
             <Board squares={positions} onMovePiece={movePiece} />
             <Numbers/>
             <Letters/>
+            <FEN fen={fen} />
         </div>
     );
 }
