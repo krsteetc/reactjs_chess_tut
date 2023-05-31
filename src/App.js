@@ -2,6 +2,7 @@ import Board from "./Components/Board-Components/Board";
 import './App.css';
 import Numbers from "./Components/Board-Components/Numbers";
 import Letters from "./Components/Board-Components/Letters";
+import {useState} from "react";
 
 function App() {
 
@@ -14,7 +15,7 @@ function App() {
                 type: 'empty',
                 isSelected: false,
                 isEmpty: true,
-                isDark: (j + i) % 2 === 0 ? true : false,
+                isDark: (j + i) % 2 === 0,
             });
         }
     }
@@ -49,10 +50,16 @@ function App() {
         squares[j + 56].isEmpty = false;
     }
 
+    const [positions, setPositions] = useState(squares)
+
+    function movePiece (updatedSquares) {
+        setPositions(updatedSquares);
+    }
+
 
     return (
         <div className='App'>
-            <Board squares={squares} />
+            <Board squares={positions} onMovePiece={movePiece} />
             <Numbers/>
             <Letters/>
         </div>

@@ -7,7 +7,6 @@ function Piece (props) {
 
     return (
         <div className='Piece' style={{backgroundImage: `url(${pieceImage})`}}>
-            {/* <img src={`/piece-images/${type}.png`} alt={`${type}`}/> */}
         </div>
             )
 }

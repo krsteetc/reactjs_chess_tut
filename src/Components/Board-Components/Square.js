@@ -7,19 +7,15 @@ function Square(props) {
         (p) => p.x === props.x && p.y === props.y
     );
     const isEmpty = !piece || piece.type === 'empty';
-
     function selectPieceHandler (piece) {
         props.onSelectPiece(piece)
     }
     function SetIsPieceSelectedHandler (isTrue) {
         props.onSetIsPieceSelected(isTrue)
     }
-
     function movePiece (x,y) {
         props.onMovePiece(x,y)
     }
-
-
 
     function SquareClickHandler() {
         if (!isEmpty) {
@@ -40,8 +36,6 @@ function Square(props) {
         }
     }
 
-
-
     return (
         <div
             className={`Square ${props.isSquareDark ? "Dark" : "Light"} ${
@@ -57,5 +51,4 @@ function Square(props) {
         </div>
     );
 }
-
 export default Square;
