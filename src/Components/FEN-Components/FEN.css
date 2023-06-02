@@ -1,4 +1,15 @@
 .FEN {
     position: absolute;
-    color: white;
+    color: #fffffe;
+}
+
+.Field{
+    width: 400px;
+    height: 90px;
+
+}
+
+.TextBox{
+    margin-top: 20px;
+    width: 370px;
 }

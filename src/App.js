@@ -51,6 +51,74 @@ function App() {
         squares[j + 56].isEmpty = false;
     }
 
+    function fenToSquaresConvertor (fen) {
+        let fenPositions = [...positions];
+        let indexCounter = 0;
+        for (let i = 0; i < fen.length; i++) {
+            if(fen[i] !== '/'){
+                if(!isNaN(fen[i])){
+                    for (let j = 0; j<parseInt(fen[i]); j++){
+                        fenPositions[indexCounter].type = 'empty';
+                        indexCounter += 1;
+                    }
+                }
+                else {
+                    switch (fen[i]){
+                        case 'p':
+                            fenPositions[indexCounter].type = 'pawn_black'
+                            indexCounter +=1;
+                            break;
+                        case 'r':
+                            fenPositions[indexCounter].type = 'rook_black'
+                            indexCounter +=1;
+                            break;
+                        case 'n':
+                            fenPositions[indexCounter].type = 'knight_black'
+                            indexCounter +=1;
+                            break;
+                        case 'b':
+                            fenPositions[indexCounter].type = 'bishop_black'
+                            indexCounter +=1;
+                            break;
+                        case 'q':
+                            fenPositions[indexCounter].type = 'queen_black'
+                            indexCounter +=1;
+                            break;
+                        case 'k':
+                            fenPositions[indexCounter].type = 'king_black'
+                            indexCounter +=1;
+                            break;
+                        case 'P':
+                            fenPositions[indexCounter].type = 'pawn_white'
+                            indexCounter +=1;
+                            break;
+                        case 'R':
+                            fenPositions[indexCounter].type = 'rook_white'
+                            indexCounter +=1;
+                            break;
+                        case 'N':
+                            fenPositions[indexCounter].type = 'knight_white'
+                            indexCounter +=1;
+                            break;
+                        case 'B':
+                            fenPositions[indexCounter].type = 'bishop_white'
+                            indexCounter +=1;
+                            break;
+                        case 'Q':
+                            fenPositions[indexCounter].type = 'queen_white'
+                            indexCounter +=1;
+                            break;
+                        case 'K':
+                            fenPositions[indexCounter].type = 'king_white'
+                            indexCounter +=1;
+                            break;
+                    }
+                }
+            }
+        }
+        setPositions(fenPositions);
+    }
+
     function generateFEN(squares) {
         let fen = "";
         let emptyCounter = 0;
@@ -106,13 +174,17 @@ function App() {
         generateFEN(updatedSquares);
     }
 
+    function fenChangeHandler (fen) {
+        fenToSquaresConvertor(fen);
+    }
+
 
     return (
         <div className='App'>
             <Board squares={positions} onMovePiece={movePiece} />
             <Numbers/>
             <Letters/>
-            <FEN fen={fen} />
+            <FEN fen={fen} onFenChange={fenChangeHandler}  />
         </div>
     );
 }
