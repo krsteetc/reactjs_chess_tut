@@ -81,9 +81,11 @@ function FEN (props) {
     return (
        <div className='FEN'>
            <form onSubmit={onSubmitHandler} >
+                   <div className='Title'>
+                       <label>FEN</label>
+                   </div>
                <div className='Field'>
-                    <label>FEN</label>
-                    <input type='text' value={localFen}  className='TextBox' onChange={localFenEditHandler} />
+                    <input type='text' value={localFen}  className='TextBox' onChange={localFenEditHandler} maxLength='64' spellCheck={false}/>
                </div>
                <div className='Button'>
                    <button type='submit'>Edit FEN</button>
