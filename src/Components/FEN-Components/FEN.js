@@ -15,48 +15,56 @@ function FEN (props) {
 
     const [localFen, setLocalFen] = useState(props.fen || '');
 
-    function isFenValid () {
+    function isFenValid(localFen) {
         const sections = localFen.split('/');
+
         if (sections.length !== 8) {
             return false;
         }
+
         for (const section of sections) {
             const sectionLength = section.length;
+
             if (sectionLength < 1 || sectionLength > 8) {
                 return false;
             }
-            for (let i = 0; i < sectionLength; i++){
-                if (isNaN(section[i])) {
-                    if (
-                        section[i].toLowerCase() !== 'p' &&
-                        section[i].toLowerCase() !== 'q' &&
-                        section[i].toLowerCase() !== 'k' &&
-                        section[i].toLowerCase() !== 'n' &&
-                        section[i].toLowerCase() !== 'b' &&
-                        section[i].toLowerCase() !== 'r'
-                    ) {
+
+            let counter = 0;
+
+            for (let i = 0; i < sectionLength; i++) {
+                const char = section[i];
+
+                if (isNaN(char)) {
+                    const lowercaseChar = char.toLowerCase();
+
+                    if (!['p', 'q', 'k', 'n', 'b', 'r'].includes(lowercaseChar)) {
                         return false;
                     }
-                }
-                else {
-                    if (parseInt(section[i]) < 1 || parseInt(section[i]) > 8 ){
+
+                    counter++;
+                } else {
+                    const num = parseInt(char);
+
+                    if (num < 1 || num > 8) {
                         return false;
                     }
+
+                    counter += num;
                 }
-                let counter = 0;
-                if (!isNaN(section[i])){
-                    counter += parseInt(section[i]);
-                }
-                else {
-                    counter += 1;
-                }
+
                 if (counter > 8) {
                     return false;
                 }
             }
+
+            if (counter !== 8) {
+                return false;
+            }
         }
+
         return true;
     }
+
 
     function onSubmitHandler (event) {
         event.preventDefault();
