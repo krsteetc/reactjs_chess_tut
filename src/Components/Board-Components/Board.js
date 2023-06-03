@@ -4,6 +4,8 @@ import {useState} from "react";
 
 function Board (props) {
 
+    const [turn, setTurn] = useState('white');
+
     const [selectedPiece, setSelectedPiece] = useState(null);
 
     const [isSelected, setIsSelected] = useState(false);
@@ -41,6 +43,8 @@ function Board (props) {
                     onMovePiece={movePiece}
                     isSquareDark={square.isDark}
                     selectedPiece={selectedPiece}
+                    turn={turn}
+                    setTurn={setTurn}
                 />
             )}
         </div>

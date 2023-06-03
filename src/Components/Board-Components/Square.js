@@ -20,8 +20,16 @@ function Square(props) {
     function SquareClickHandler() {
         if (!isEmpty) {
             if (!props.isSelected) {
-                selectPieceHandler(piece);
-                SetIsPieceSelectedHandler(true);
+                if(props.turn === 'white' && piece.type.split('_')[1] === 'white' || props.turn === 'black' && piece.type.split('_')[1] === 'black'){
+                    selectPieceHandler(piece);
+                    SetIsPieceSelectedHandler(true);
+                    if(props.turn === 'white'){
+                        props.setTurn('black')
+                    }
+                    else{
+                        props.setTurn('white')
+                    }
+                }
             } else {
                 movePiece(props.x, props.y);
                 selectPieceHandler(null);
