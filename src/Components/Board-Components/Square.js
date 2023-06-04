@@ -17,36 +17,44 @@ function Square(props) {
         props.onMovePiece(x,y)
     }
 
+
+
     function SquareClickHandler() {
         if (!isEmpty) {
             if (!props.isSelected) {
-                if(props.turn === 'white' && piece.type.split('_')[1] === 'white' || props.turn === 'black' && piece.type.split('_')[1] === 'black'){
+                if(props.turn ===  piece.type.split('_')[1]){
                     selectPieceHandler(piece);
                     SetIsPieceSelectedHandler(true);
-                    if(props.turn === 'white'){
-                        props.setTurn('black')
-                    }
-                    else{
-                        props.setTurn('white')
-                    }
+                    props.onSetLegalMoves(piece)
                 }
             } else {
-                movePiece(props.x, props.y);
-                selectPieceHandler(null);
-                SetIsPieceSelectedHandler(false);
+                if (props.selectedPiece.type.split('_')[1] === piece.type.split('_')[1]) {
+                    selectPieceHandler(piece);
+                    SetIsPieceSelectedHandler(true);
+                    props.onSetLegalMoves(piece)
+                }
+                if (props.isLegal){
+                    movePiece(props.x, props.y);
+                    selectPieceHandler(null);
+                    SetIsPieceSelectedHandler(false);
+                }
             }
         } else {
             if (props.isSelected) {
-                movePiece(props.x, props.y);
-                selectPieceHandler(null);
-                SetIsPieceSelectedHandler(false);
+                if (props.isLegal){
+                    movePiece(props.x, props.y);
+                    selectPieceHandler(null);
+                    SetIsPieceSelectedHandler(false);
+                }
             }
         }
     }
 
     return (
         <div
-            className={`Square ${props.isSquareDark ? "Dark" : "Light"} ${
+            className={`Square ${props.isSquareDark ? "Dark" : "Light" } ${props.isLegal ? 'Legal' : ''}
+            ${props.isLegal && !props.isEmpty ? 'Attacked' : ''}
+             ${
                 props.selectedPiece &&
                 props.selectedPiece.x === parseInt(props.x) &&
                 props.selectedPiece.y === parseInt(props.y)

@@ -17,6 +17,7 @@ function App() {
                 isSelected: false,
                 isEmpty: true,
                 isDark: (j + i) % 2 === 0,
+                isLegal: false
             });
         }
     }
@@ -59,6 +60,7 @@ function App() {
                 if(!isNaN(fen[i])){
                     for (let j = 0; j<parseInt(fen[i]); j++){
                         fenPositions[indexCounter].type = 'empty';
+                        fenPositions[indexCounter].isEmpty = true;
                         indexCounter += 1;
                     }
                 }
@@ -66,50 +68,62 @@ function App() {
                     switch (fen[i]){
                         case 'p':
                             fenPositions[indexCounter].type = 'pawn_black'
+                            fenPositions[indexCounter].isEmpty = false;
                             indexCounter +=1;
                             break;
                         case 'r':
                             fenPositions[indexCounter].type = 'rook_black'
+                            fenPositions[indexCounter].isEmpty = false;
                             indexCounter +=1;
                             break;
                         case 'n':
                             fenPositions[indexCounter].type = 'knight_black'
+                            fenPositions[indexCounter].isEmpty = false;
                             indexCounter +=1;
                             break;
                         case 'b':
                             fenPositions[indexCounter].type = 'bishop_black'
+                            fenPositions[indexCounter].isEmpty = false;
                             indexCounter +=1;
                             break;
                         case 'q':
                             fenPositions[indexCounter].type = 'queen_black'
+                            fenPositions[indexCounter].isEmpty = false;
                             indexCounter +=1;
                             break;
                         case 'k':
                             fenPositions[indexCounter].type = 'king_black'
+                            fenPositions[indexCounter].isEmpty = false;
                             indexCounter +=1;
                             break;
                         case 'P':
                             fenPositions[indexCounter].type = 'pawn_white'
+                            fenPositions[indexCounter].isEmpty = false;
                             indexCounter +=1;
                             break;
                         case 'R':
                             fenPositions[indexCounter].type = 'rook_white'
+                            fenPositions[indexCounter].isEmpty = false;
                             indexCounter +=1;
                             break;
                         case 'N':
                             fenPositions[indexCounter].type = 'knight_white'
+                            fenPositions[indexCounter].isEmpty = false;
                             indexCounter +=1;
                             break;
                         case 'B':
                             fenPositions[indexCounter].type = 'bishop_white'
+                            fenPositions[indexCounter].isEmpty = false;
                             indexCounter +=1;
                             break;
                         case 'Q':
                             fenPositions[indexCounter].type = 'queen_white'
+                            fenPositions[indexCounter].isEmpty = false;
                             indexCounter +=1;
                             break;
                         case 'K':
                             fenPositions[indexCounter].type = 'king_white'
+                            fenPositions[indexCounter].isEmpty = false;
                             indexCounter +=1;
                             break;
                     }
@@ -117,6 +131,10 @@ function App() {
             }
         }
         setPositions(fenPositions);
+    }
+
+    function setLegalMoves (updatedSquares) {
+        setPositions(updatedSquares)
     }
 
     function generateFEN(squares) {
@@ -181,7 +199,7 @@ function App() {
 
     return (
         <div className='App'>
-            <Board squares={positions} onMovePiece={movePiece} />
+            <Board squares={positions} onMovePiece={movePiece} onSetLegalMoves={setLegalMoves} />
             <Numbers/>
             <Letters/>
             <FEN fen={fen} onFenChange={fenChangeHandler}  />

@@ -25,3 +25,17 @@
     transition: background-color 0.4s ease;
 }
 
+.Square.Legal{
+    box-shadow: 0 0 5px #cbf05a,
+    0 0 10px #cbf05a,
+    0 0 10px #cbf05a,
+    0 0 10px #cbf05a;
+}
+
+.Square.Attacked {
+    box-shadow: 0 0 5px #F05A80,
+    0 0 10px #F05A80,
+    0 0 10px #F05A80,
+    0 0 10px #F05A80;
+}
+
