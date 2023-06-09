@@ -216,14 +216,14 @@ function Board (props) {
 
             case 'queen':
                 let queenDirections = [
-                    { x: 0, y: 1 }, 
-                    { x: 0, y: -1 }, 
-                    { x: -1, y: 0 },
-                    { x: 1, y: 0 },
-                    { x: -1, y: 1 },
-                    { x: 1, y: 1 },
-                    { x: -1, y: -1 }, 
-                    { x: 1, y: -1 },
+                    { x: 0, y: 1 }, // Top
+                    { x: 0, y: -1 }, // Bottom
+                    { x: -1, y: 0 }, // Left
+                    { x: 1, y: 0 }, // Right
+                    { x: -1, y: 1 }, // Top-left
+                    { x: 1, y: 1 }, // Top-right
+                    { x: -1, y: -1 }, // Bottom-left
+                    { x: 1, y: -1 }, // Bottom-right
                   ];
               
                 for (let dir of queenDirections) {
@@ -285,14 +285,14 @@ function Board (props) {
 
                 case 'king':
                     const kingMoves = [
-                        { x: -1, y: 1 },
-                        { x: 0, y: 1 }, 
-                        { x: 1, y: 1 }, 
-                        { x: -1, y: 0 },
-                        { x: 1, y: 0 },
-                        { x: -1, y: -1 },
-                        { x: 0, y: -1 },
-                        { x: 1, y: -1 },
+                        { x: -1, y: 1 }, // Top-left
+                        { x: 0, y: 1 }, // Top
+                        { x: 1, y: 1 }, // Top-right
+                        { x: -1, y: 0 }, // Left
+                        { x: 1, y: 0 }, // Right
+                        { x: -1, y: -1 }, // Bottom-left
+                        { x: 0, y: -1 }, // Bottom
+                        { x: 1, y: -1 }, // Bottom-right
                     ];
                 
                     for (let move of kingMoves) {
