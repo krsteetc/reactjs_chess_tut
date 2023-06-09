@@ -174,7 +174,147 @@ function Board (props) {
 
 
                 break;
+            case 'bishop':
+                for (let i = 0; i < updatedLegalMoves.length; i++) {
+                    updatedLegalMoves[i] = { ...updatedLegalMoves[i], isLegal: false };
+                }
+            
+                const directions = [
+                    { x: -1, y: 1 },
+                    { x: 1, y: 1 },
+                    { x: -1, y: -1 },
+                    { x: 1, y: -1 }
+                ];
+            
+                for (let dir of directions) {
+                    let newX = piece.x + dir.x;
+                    let newY = piece.y + dir.y;
+            
+                    while (newX >= 1 && newX <= 8 && newY >= 1 && newY <= 8) {
+                        const index = props.squares.findIndex(obj => obj.x === newX && obj.y === newY);
+                        const square = props.squares[index];
+            
+                        if (square.isEmpty) {
+                            updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true };
+                        }
+                        else if (square.type.split('_')[1] !== color) {
+                            updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true };
+                            break;
+                        }
+                        else {
+                            break;
+                        }
+            
+                        newX += dir.x;
+                        newY += dir.y;
+                    }
+                }
+            
+                props.onSetLegalMoves(updatedLegalMoves);
+                break;
+            //kraj na bishop
+
+            case 'queen':
+                let queenDirections = [
+                    { x: 0, y: 1 }, 
+                    { x: 0, y: -1 }, 
+                    { x: -1, y: 0 },
+                    { x: 1, y: 0 },
+                    { x: -1, y: 1 },
+                    { x: 1, y: 1 },
+                    { x: -1, y: -1 }, 
+                    { x: 1, y: -1 },
+                  ];
+              
+                for (let dir of queenDirections) {
+                  let newX = piece.x + dir.x;
+                  let newY = piece.y + dir.y;
+              
+                  while (newX >= 1 && newX <= 8 && newY >= 1 && newY <= 8) {
+                    const index = props.squares.findIndex(obj => obj.x === newX && obj.y === newY);
+                    const square = props.squares[index];
+              
+                    if (square.isEmpty) {
+                      updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true };
+                    }
+                    else if (square.type.split('_')[1] !== color) {
+                      updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true };
+                      break;
+                    }
+                    else {
+                      break;
+                    }
+              
+                    newX += dir.x;
+                    newY += dir.y;
+                  }
+                }
+              
+                props.onSetLegalMoves(updatedLegalMoves);
+                break;
+                //kraj na kralica
+                
+                case 'knight':
+                    const knightMoves = [
+                      { x: -2, y: -1 },
+                      { x: -2, y: 1 },
+                      { x: -1, y: -2 },
+                      { x: -1, y: 2 },
+                      { x: 1, y: -2 },
+                      { x: 1, y: 2 },
+                      { x: 2, y: -1 },
+                      { x: 2, y: 1 },
+                    ];
+                  
+                    for (let move of knightMoves) {
+                      const newX = piece.x + move.x;
+                      const newY = piece.y + move.y;
+                  
+                      if (newX >= 1 && newX <= 8 && newY >= 1 && newY <= 8) {
+                        const index = props.squares.findIndex(obj => obj.x === newX && obj.y === newY);
+                        const square = props.squares[index];
+                  
+                        if (square.isEmpty || square.type.split('_')[1] !== color) {
+                          updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true };
+                        }
+                      }
+                    }
+                  
+                    break;
+                //kraj na konj
+
+                case 'king':
+                    const kingMoves = [
+                        { x: -1, y: 1 },
+                        { x: 0, y: 1 }, 
+                        { x: 1, y: 1 }, 
+                        { x: -1, y: 0 },
+                        { x: 1, y: 0 },
+                        { x: -1, y: -1 },
+                        { x: 0, y: -1 },
+                        { x: 1, y: -1 },
+                    ];
+                
+                    for (let move of kingMoves) {
+                        const newX = piece.x + move.x;
+                        const newY = piece.y + move.y;
+                
+                        if (newX >= 1 && newX <= 8 && newY >= 1 && newY <= 8) {
+                            const index = props.squares.findIndex(obj => obj.x === newX && obj.y === newY);
+                            const square = props.squares[index];
+                
+                            if (square.isEmpty || square.type.split('_')[1] !== color) {
+                                updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true };
+                            }
+                        }
+                    }
+                
+                    props.onSetLegalMoves(updatedLegalMoves);
+                    break;
+                
+                //kraj na kral
             // Cases za ostanatite choechinja
+
 
             default:
                 break;
