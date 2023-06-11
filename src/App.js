@@ -196,10 +196,18 @@ function App() {
         fenToSquaresConvertor(fen);
     }
 
+    function promotePawn (type,color,x,y){
+        const updatedSquares = [...positions];
+        const promotedPawn = positions.findIndex((obj) => obj.x === x && obj.y === y);
+        updatedSquares[promotedPawn] = { ...updatedSquares[promotedPawn], type: `${type}_${color}`, isEmpty: false };
+        console.log(`${type}_${color}`)
+        setPositions(updatedSquares);
+    }
+
 
     return (
         <div className='App'>
-            <Board squares={positions} onMovePiece={movePiece} onSetLegalMoves={setLegalMoves} />
+            <Board squares={positions} onMovePiece={movePiece} onSetLegalMoves={setLegalMoves} promotePawn={promotePawn} />
             <Numbers/>
             <Letters/>
             <FEN fen={fen} onFenChange={fenChangeHandler}  />

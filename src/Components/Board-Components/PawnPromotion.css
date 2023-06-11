@@ -1,0 +1,48 @@
+.PawnPromotion {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    z-index: 10;
+    height: 110px;
+    width: 350px;
+    background: rgba(0,0,0,.8);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    border-radius: 10px;
+}
+
+.Queen{
+    margin-left: 10px;
+}
+
+.Knight {
+    margin-right: 10px;
+}
+
+.PromoteButton{
+    height: 80px;
+    width: 60px;
+    margin-top: 10px;
+    background: #7f5af0;
+    transition: .5s;
+    border-radius: 10px;
+}
+
+img{
+    margin-top: 10px;
+}
+
+.PromoteButton:hover {
+    background: #7f5af0;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #7f5af0,
+    0 0 25px #7f5af0,
+    0 0 50px #7f5af0,
+    0 0 75px #7f5af0;
+}
+
+.PromoteButton:hover img{
+    transform: scale(1.1);
+    transition: .5s;
+}

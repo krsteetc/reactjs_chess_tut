@@ -324,6 +324,8 @@ function Board (props) {
     }
 
 
+
+
     return (
         <div className="board-card">
             {props.squares.map(
@@ -344,6 +346,7 @@ function Board (props) {
                     setTurn={setTurn}
                     isLegal={square.isLegal}
                     onSetLegalMoves={setLegalMoves}
+                    promotePawn={props.promotePawn}
                 />
             )}
         </div>
