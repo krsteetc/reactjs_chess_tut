@@ -29,10 +29,10 @@ function PawnPromotion (props){
 
     return(
         <div className='PawnPromotion'>
-            <div className={"Queen PromoteButton"} id={'Piece'} onClick={promotePawnToQueen}> <img src={`/piece-images/queen_${color}.png` } alt={'Queen'}></img></div>
-            <div className={"Rook PromoteButton"} id={'Piece'} onClick={promotePawnToRook} ><img src={`/piece-images/rook_${color}.png` } alt={'Rook'}></img></div>
-            <div className={"Bishop PromoteButton"} id={'Piece'} onClick={promotePawnToBishop} ><img src={`/piece-images/bishop_${color}.png` } alt={'Bishop'}></img></div>
-            <div className={"Knight PromoteButton"} id={'Piece'} onClick={promotePawnToKnight} ><img src={`/piece-images/knight_${color}.png` } alt={'Knight'}></img></div>
+            <div className={"Queen PromoteButton"} onClick={promotePawnToQueen}> <img src={`/piece-images/queen_${color}.png` } alt={'Queen'}></img></div>
+            <div className={"Rook PromoteButton"} onClick={promotePawnToRook} ><img src={`/piece-images/rook_${color}.png` } alt={'Rook'}></img></div>
+            <div className={"Bishop PromoteButton"}  onClick={promotePawnToBishop} ><img src={`/piece-images/bishop_${color}.png` } alt={'Bishop'}></img></div>
+            <div className={"Knight PromoteButton"} onClick={promotePawnToKnight} ><img src={`/piece-images/knight_${color}.png` } alt={'Knight'}></img></div>
         </div>
     )
 

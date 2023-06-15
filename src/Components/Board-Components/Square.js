@@ -42,7 +42,7 @@ function Square(props) {
                     if (
                         (props.selectedPiece.type.split('_')[0] === 'pawn' &&
                             props.y === 1) ||
-                        props.y === 8
+                        props.selectedPiece.type.split('_')[0] === 'pawn' && props.y === 8
                     ) {
                         setShowPawnPromotion(true);
                     }
@@ -57,7 +57,7 @@ function Square(props) {
                     if (
                         (props.selectedPiece.type.split('_')[0] === 'pawn' &&
                             props.y === 1) ||
-                        props.y === 8
+                        props.selectedPiece.type.split('_')[0] === 'pawn' && props.y === 8
                     ) {
                         setShowPawnPromotion(true);
                     }
