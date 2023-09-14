@@ -24,13 +24,13 @@ function Square(props) {
     function squareClickHandler() {
         if (!isEmpty) {
             if (!props.isSelected) {
-                if (props.turn === piece.type.split('_')[1]) {
+                if (props.turn === piece.type.split('_')[1][0]) {
                     selectPieceHandler(piece);
                     setIsPieceSelectedHandler(true);
                     props.onSetLegalMoves(piece);
                 }
             } else {
-                if (props.selectedPiece.type.split('_')[1] === piece.type.split('_')[1]) {
+                if (props.selectedPiece.type.split('_')[1] === piece.type.split('_')[1][0]) {
                     selectPieceHandler(piece);
                     setIsPieceSelectedHandler(true);
                     props.onSetLegalMoves(piece);
@@ -65,6 +65,7 @@ function Square(props) {
             }
         }
     }
+
 
     function hidePawnPromotion (){
         setShowPawnPromotion(false);

@@ -1,45 +1,72 @@
 import './Board.css'
 import Square from "./Square";
 import {useState} from "react";
+import {Chess} from "chess.js";
 
 function Board (props) {
 
-    const [turn, setTurn] = useState('white');
+    const turn = props.turn;
+    const selectedPiece = props.selectedPiece;
+    const isSelected = props.isSelected;
 
-    const [selectedPiece, setSelectedPiece] = useState(null);
-
-    const [isSelected, setIsSelected] = useState(false);
 
     function selectPiece(piece){
-        setSelectedPiece(piece);
+        props.setPiece(piece);
     }
     function isPieceSelected(isTrue) {
-       setIsSelected(isTrue);
+       props.setIsSelected(isTrue);
     }
     function movePiece(x,y) {
-        const moveTo = props.squares.findIndex((obj) => obj.x === x && obj.y === y);
-        const removeFrom = props.squares.findIndex((obj) => obj.x === selectedPiece.x && obj.y === selectedPiece.y);
 
-        const updatedSquares = [...props.squares];
-        updatedSquares[moveTo] = { ...updatedSquares[moveTo], type: selectedPiece.type, isEmpty: false };
-        updatedSquares[removeFrom] = { ...updatedSquares[removeFrom], type: 'empty', isEmpty: true };
-        for (let i = 0; i<updatedSquares.length; i++){
-            updatedSquares[i] = {...updatedSquares[i], isLegal: false};
-        }
-        props.onMovePiece(updatedSquares);
+        props.onMovePiece(x,y,selectedPiece)
 
-        if(turn === 'white'){
-            setTurn('black')
-        }
-        else {
-            setTurn('white')
-        }
+        // const from = positionMap.get(selectedPiece.x) + selectedPiece.y;
+        // const to = positionMap.get(x) + y;
+        // chess.move({from:from, to:to})
+        //
+        // const moveTo = props.squares.findIndex((obj) => obj.x === x && obj.y === y);
+        // const removeFrom = props.squares.findIndex((obj) => obj.x === selectedPiece.x && obj.y === selectedPiece.y);
+        // const updatedSquares = [...props.squares];
+        // updatedSquares[moveTo] = { ...updatedSquares[moveTo], type: selectedPiece.type, isEmpty: false };
+        // updatedSquares[removeFrom] = { ...updatedSquares[removeFrom], type: 'empty', isEmpty: true };
+        // for (let i = 0; i<updatedSquares.length; i++){
+        //     updatedSquares[i] = {...updatedSquares[i], isLegal: false};
+        // }
+        // props.onMovePiece(updatedSquares);
+        //
+        // if(turn === 'white'){
+        //
+        //     setTurn('black')
+        // }
+        // else {
+        //     chess.turn()
+        //     setTurn('white')
+        // }
     }
 
+
     function setLegalMoves(piece) {
+
         const figure = piece.type.split('_')[0];
         const color = piece.type.split('_')[1];
         const updatedLegalMoves = [...props.squares];
+        const updatedWhiteLegalMoves = [];
+        const updatedBlackLegalMoves = [];
+
+
+        for (let index in updatedLegalMoves) {
+            const square = updatedLegalMoves[index];
+            if (square.type.split('_')[1] === 'white'){
+                updatedWhiteLegalMoves.push(square)
+                }
+            else {
+                updatedBlackLegalMoves.push(square)
+            }
+        }
+
+        setWhiteLegalMoves(updatedWhiteLegalMoves);
+        setBlackLegalMoves(updatedBlackLegalMoves);
+
 
         for (let i = 0; i<updatedLegalMoves.length; i++){
             updatedLegalMoves[i] = {...updatedLegalMoves[i], isLegal: false};
@@ -178,22 +205,22 @@ function Board (props) {
                 for (let i = 0; i < updatedLegalMoves.length; i++) {
                     updatedLegalMoves[i] = { ...updatedLegalMoves[i], isLegal: false };
                 }
-            
+
                 const directions = [
                     { x: -1, y: 1 },
                     { x: 1, y: 1 },
                     { x: -1, y: -1 },
                     { x: 1, y: -1 }
                 ];
-            
+
                 for (let dir of directions) {
                     let newX = piece.x + dir.x;
                     let newY = piece.y + dir.y;
-            
+
                     while (newX >= 1 && newX <= 8 && newY >= 1 && newY <= 8) {
                         const index = props.squares.findIndex(obj => obj.x === newX && obj.y === newY);
                         const square = props.squares[index];
-            
+
                         if (square.isEmpty) {
                             updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true };
                         }
@@ -204,12 +231,12 @@ function Board (props) {
                         else {
                             break;
                         }
-            
+
                         newX += dir.x;
                         newY += dir.y;
                     }
                 }
-            
+
                 props.onSetLegalMoves(updatedLegalMoves);
                 break;
             //kraj na bishop
@@ -225,15 +252,15 @@ function Board (props) {
                     { x: -1, y: -1 }, // Bottom-left
                     { x: 1, y: -1 }, // Bottom-right
                   ];
-              
+
                 for (let dir of queenDirections) {
                   let newX = piece.x + dir.x;
                   let newY = piece.y + dir.y;
-              
+
                   while (newX >= 1 && newX <= 8 && newY >= 1 && newY <= 8) {
                     const index = props.squares.findIndex(obj => obj.x === newX && obj.y === newY);
                     const square = props.squares[index];
-              
+
                     if (square.isEmpty) {
                       updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true };
                     }
@@ -244,16 +271,16 @@ function Board (props) {
                     else {
                       break;
                     }
-              
+
                     newX += dir.x;
                     newY += dir.y;
                   }
                 }
-              
+
                 props.onSetLegalMoves(updatedLegalMoves);
                 break;
                 //kraj na kralica
-                
+
                 case 'knight':
                     const knightMoves = [
                       { x: -2, y: -1 },
@@ -265,21 +292,21 @@ function Board (props) {
                       { x: 2, y: -1 },
                       { x: 2, y: 1 },
                     ];
-                  
+
                     for (let move of knightMoves) {
                       const newX = piece.x + move.x;
                       const newY = piece.y + move.y;
-                  
+
                       if (newX >= 1 && newX <= 8 && newY >= 1 && newY <= 8) {
                         const index = props.squares.findIndex(obj => obj.x === newX && obj.y === newY);
                         const square = props.squares[index];
-                  
+
                         if (square.isEmpty || square.type.split('_')[1] !== color) {
                           updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true };
                         }
                       }
                     }
-                  
+
                     break;
                 //kraj na konj
 
@@ -294,26 +321,42 @@ function Board (props) {
                         { x: 0, y: -1 }, // Bottom
                         { x: 1, y: -1 }, // Bottom-right
                     ];
-                
+
                     for (let move of kingMoves) {
                         const newX = piece.x + move.x;
                         const newY = piece.y + move.y;
-                
+
                         if (newX >= 1 && newX <= 8 && newY >= 1 && newY <= 8) {
                             const index = props.squares.findIndex(obj => obj.x === newX && obj.y === newY);
                             const square = props.squares[index];
-                
-                            if (square.isEmpty || square.type.split('_')[1] !== color) {
-                                updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true };
+
+                            if (color === 'white'){
+                                if (!whiteLegalMoves.includes(square)) {
+                                    if (square.isEmpty) {
+                                        updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true };
+                                    }
+                                    if (square.type.split('_')[1] !== color){
+                                        updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true }
+                                    }
+                                }
+                            }
+                            else {
+                                if (!blackLegalMoves.includes(square)) {
+                                    if (square.isEmpty) {
+                                        updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true };
+                                    }
+                                    if (square.type.split('_')[1] !== color){
+                                        updatedLegalMoves[index] = { ...updatedLegalMoves[index], isLegal: true }
+                                    }
+                                }
                             }
                         }
                     }
-                
+
                     props.onSetLegalMoves(updatedLegalMoves);
                     break;
-                
+
                 //kraj na kral
-            // Cases za ostanatite choechinja
 
 
             default:
@@ -322,6 +365,10 @@ function Board (props) {
 
         props.onSetLegalMoves(updatedLegalMoves);
     }
+
+    const [whiteLegalMoves, setWhiteLegalMoves] = useState(null);
+
+    const [blackLegalMoves, setBlackLegalMoves] = useState(null);
 
 
 
@@ -343,7 +390,7 @@ function Board (props) {
                     isSquareDark={square.isDark}
                     selectedPiece={selectedPiece}
                     turn={turn}
-                    setTurn={setTurn}
+                    setTurn={props.setTurn}
                     isLegal={square.isLegal}
                     onSetLegalMoves={setLegalMoves}
                     promotePawn={props.promotePawn}

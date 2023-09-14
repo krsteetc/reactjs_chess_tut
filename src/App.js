@@ -4,9 +4,13 @@ import Numbers from "./Components/Board-Components/Numbers";
 import Letters from "./Components/Board-Components/Letters";
 import {useState} from "react";
 import FEN from "./Components/FEN-Components/FEN";
+import {Chess} from "chess.js";
 
 function App() {
 
+
+
+//setting up the initial squares of the board
     let squares = [];
     for (let i = 8; i >= 1; i--) {
         for (let j = 1; j <= 8; j++) {
@@ -52,10 +56,12 @@ function App() {
         squares[j + 56].isEmpty = false;
     }
 
+
+
     function fenToSquaresConvertor (fen) {
         let fenPositions = [...positions];
         let indexCounter = 0;
-        for (let i = 0; i < fen.length; i++) {
+        for (let i = 0; fen[i] !== ' '; i++) {
             if(fen[i] !== '/'){
                 if(!isNaN(fen[i])){
                     for (let j = 0; j<parseInt(fen[i]); j++){
@@ -130,12 +136,14 @@ function App() {
                 }
             }
         }
-        setPositions(fenPositions);
+
+            //update position data
+
     }
 
     function setLegalMoves (updatedSquares) {
         setPositions(updatedSquares)
-    }
+    } //trgni
 
     function generateFEN(squares) {
         let fen = "";
@@ -179,18 +187,54 @@ function App() {
                 fen += "/";
             }
         }
+
         setFen(fen)
     }
 
+    const positionMap = new Map([
+        [1,'a'],
+        [2,'b'],
+        [3,'c'],
+        [4,'d'],
+        [5,'e'],
+        [6,'f'],
+        [7,'g'],
+        [8,'h'],
+
+    ]);
+
+
+    const chess = new Chess();
+
     const [positions, setPositions] = useState(squares);
 
-    const [fen, setFen] = useState('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR');
+    const [fen, setFen] = useState(chess.fen());
+
+    const initialTurnIndex = chess.fen().indexOf(' ') + 1;
+
+    const [turn, setTurn] = useState(fen[initialTurnIndex]);
+
+    const [selectedPiece, setSelectedPiece] = useState(null);
+
+    const [isSelected, setIsSelected] = useState(false);
 
 
-    function movePiece (updatedSquares) {
-        setPositions(updatedSquares);
-        generateFEN(updatedSquares);
+
+    function movePiece (x,y,selectedPiece) {
+        const from = positionMap.get(selectedPiece.x) + selectedPiece.y;
+        const to = positionMap.get(x) + y;
+        chess.move({from:from, to:to})
+        setFen(chess.fen());
+        if(turn === 'w'){
+            setTurn('b')
+        }
+        else {
+            setTurn('w')
+        }
+        fenToSquaresConvertor(chess.fen())
+        //update position data
     }
+
 
     function fenChangeHandler (fen) {
         fenToSquaresConvertor(fen);
@@ -200,14 +244,29 @@ function App() {
         const updatedSquares = [...positions];
         const promotedPawn = positions.findIndex((obj) => obj.x === x && obj.y === y);
         updatedSquares[promotedPawn] = { ...updatedSquares[promotedPawn], type: `${type}_${color}`, isEmpty: false };
-        console.log(`${type}_${color}`)
         setPositions(updatedSquares);
+    }
+
+    const updateFen = (newFen) => {
+        setFen(newFen)
     }
 
 
     return (
         <div className='App'>
-            <Board squares={positions} onMovePiece={movePiece} onSetLegalMoves={setLegalMoves} promotePawn={promotePawn} />
+            <Board
+                squares={positions}
+                onMovePiece={movePiece}
+                onSetLegalMoves={setLegalMoves}
+                promotePawn={promotePawn}
+                setFen={updateFen}
+                turn={turn}
+                setTurn={setTurn}
+                selectedPiece={selectedPiece}
+                isSelected={isSelected}
+                setPiece={setSelectedPiece}
+                setIsSelected={setIsSelected}
+            />
             <Numbers/>
             <Letters/>
             <FEN fen={fen} onFenChange={fenChangeHandler}  />
