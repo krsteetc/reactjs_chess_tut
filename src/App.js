@@ -136,9 +136,7 @@ function App() {
                 }
             }
         }
-
-            //update position data
-
+        setPositions(fenPositions)
     }
 
     function setLegalMoves (updatedSquares) {
@@ -204,7 +202,7 @@ function App() {
     ]);
 
 
-    const chess = new Chess();
+    const [chess, setChess] = useState(new Chess());
 
     const [positions, setPositions] = useState(squares);
 
@@ -220,19 +218,20 @@ function App() {
 
 
 
+
     function movePiece (x,y,selectedPiece) {
+
         const from = positionMap.get(selectedPiece.x) + selectedPiece.y;
         const to = positionMap.get(x) + y;
         chess.move({from:from, to:to})
-        setFen(chess.fen());
         if(turn === 'w'){
             setTurn('b')
         }
         else {
             setTurn('w')
         }
+        setFen(chess.fen());
         fenToSquaresConvertor(chess.fen())
-        //update position data
     }
 
 
