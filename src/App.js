@@ -2,7 +2,7 @@ import Board from "./Components/Board-Components/Board";
 import './App.css';
 import Numbers from "./Components/Board-Components/Numbers";
 import Letters from "./Components/Board-Components/Letters";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import FEN from "./Components/FEN-Components/FEN";
 import {Chess} from "chess.js";
 
@@ -11,10 +11,10 @@ function App() {
 
 
 //setting up the initial squares of the board
-    let squares = [];
+    let initialPositions = [];
     for (let i = 8; i >= 1; i--) {
         for (let j = 1; j <= 8; j++) {
-            squares.push({
+            initialPositions.push({
                 x: j,
                 y: i,
                 type: 'empty',
@@ -26,34 +26,34 @@ function App() {
         }
     }
 
-    squares[0].type = 'rook_black';  //Black pieces
-    squares[1].type = 'knight_black';
-    squares[2].type = 'bishop_black';
-    squares[3].type = 'queen_black';
-    squares[4].type = 'king_black';
-    squares[5].type = 'bishop_black';
-    squares[6].type = 'knight_black';
-    squares[7].type = 'rook_black';
+    initialPositions[0].type = 'rook_black';  //Black pieces
+    initialPositions[1].type = 'knight_black';
+    initialPositions[2].type = 'bishop_black';
+    initialPositions[3].type = 'queen_black';
+    initialPositions[4].type = 'king_black';
+    initialPositions[5].type = 'bishop_black';
+    initialPositions[6].type = 'knight_black';
+    initialPositions[7].type = 'rook_black';
 
     for (let j = 0; j < 8; j++) {
-        squares[j + 8].type = 'pawn_black';
-        squares[j + 8].isEmpty = false;
-        squares[j].isEmpty = false;
+        initialPositions[j + 8].type = 'pawn_black';
+        initialPositions[j + 8].isEmpty = false;
+        initialPositions[j].isEmpty = false;
     }
 
-    squares[56].type = 'rook_white';  //White pieces
-    squares[57].type = 'knight_white';
-    squares[58].type = 'bishop_white';
-    squares[59].type = 'queen_white';
-    squares[60].type = 'king_white';
-    squares[61].type = 'bishop_white';
-    squares[62].type = 'knight_white';
-    squares[63].type = 'rook_white';
+    initialPositions[56].type = 'rook_white';  //White pieces
+    initialPositions[57].type = 'knight_white';
+    initialPositions[58].type = 'bishop_white';
+    initialPositions[59].type = 'queen_white';
+    initialPositions[60].type = 'king_white';
+    initialPositions[61].type = 'bishop_white';
+    initialPositions[62].type = 'knight_white';
+    initialPositions[63].type = 'rook_white';
 
     for (let j = 0; j < 8; j++) {
-        squares[j + 48].type = 'pawn_white';
-        squares[j + 48].isEmpty = false;
-        squares[j + 56].isEmpty = false;
+        initialPositions[j + 48].type = 'pawn_white';
+        initialPositions[j + 48].isEmpty = false;
+        initialPositions[j + 56].isEmpty = false;
     }
 
 
@@ -137,57 +137,55 @@ function App() {
             }
         }
         setPositions(fenPositions)
-    }
+    } //convert FEN notation to our custom squares notation
 
-    function setLegalMoves (updatedSquares) {
-        setPositions(updatedSquares)
-    } //trgni
 
-    function generateFEN(squares) {
-        let fen = "";
-        let emptyCounter = 0;
-
-        for (let i = 8; i > 0; i--) {
-            for (let j = 1; j <= 8; j++) {
-                let currentSquare = squares.find(
-                    (p) => p.x === j && p.y === i
-                );
-                if (currentSquare.type === "empty") {
-                    emptyCounter += 1;
-                } else {
-                    if (emptyCounter !== 0) {
-                        fen += emptyCounter.toString();
-                        emptyCounter = 0;
-                    }
-                    if (currentSquare.type.split('_')[1] === 'white'){
-                        if (currentSquare.type[0] ==='k' && currentSquare.type[1] ==='n') {
-                            fen += currentSquare.type[1].toUpperCase()
-                        }
-                        else{
-                            fen += currentSquare.type[0].toUpperCase();
-                        }
-                    }
-                    else {
-                        if (currentSquare.type[0] ==='k' && currentSquare.type[1] ==='n') {
-                            fen += currentSquare.type[1]
-                        }
-                        else{
-                            fen += currentSquare.type[0]
-                        }
-                    }
-                }
-            }
-            if (emptyCounter !== 0) {
-                fen += emptyCounter.toString();
-                emptyCounter = 0;
-            }
-            if (i > 1) {
-                fen += "/";
-            }
-        }
-
-        setFen(fen)
-    }
+    // function generateFEN(squares) {
+    //     let fen = "";
+    //     let emptyCounter = 0;
+    //
+    //     for (let i = 8; i > 0; i--) {
+    //         for (let j = 1; j <= 8; j++) {
+    //             let currentSquare = squares.find(
+    //                 (p) => p.x === j && p.y === i
+    //             );
+    //             if (currentSquare.type === "empty") {
+    //                 emptyCounter += 1;
+    //             } else {
+    //                 if (emptyCounter !== 0) {
+    //                     fen += emptyCounter.toString();
+    //                     emptyCounter = 0;
+    //                 }
+    //                 if (currentSquare.type.split('_')[1] === 'white'){
+    //                     if (currentSquare.type[0] ==='k' && currentSquare.type[1] ==='n') {
+    //                         fen += currentSquare.type[1].toUpperCase()
+    //                     }
+    //                     else{
+    //                         fen += currentSquare.type[0].toUpperCase();
+    //                     }
+    //                 }
+    //                 else {
+    //                     if (currentSquare.type[0] ==='k' && currentSquare.type[1] ==='n') {
+    //                         fen += currentSquare.type[1]
+    //                     }
+    //                     else{
+    //                         fen += currentSquare.type[0]
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //         if (emptyCounter !== 0) {
+    //             fen += emptyCounter.toString();
+    //             emptyCounter = 0;
+    //         }
+    //         if (i > 1) {
+    //             fen += "/";
+    //         }
+    //     }
+    //
+    //     setFen(fen)
+    // }
+    // should probably be removed
 
     const positionMap = new Map([
         [1,'a'],
@@ -201,10 +199,22 @@ function App() {
 
     ]);
 
+    const invertedPositionMap = new Map([
+        ['a',1],
+        ['b',2],
+        ['c',3],
+        ['d',4],
+        ['e',5],
+        ['f',6],
+        ['g',7],
+        ['h',8],
+
+    ]);
+
 
     const [chess, setChess] = useState(new Chess());
 
-    const [positions, setPositions] = useState(squares);
+    const [positions, setPositions] = useState(initialPositions);
 
     const [fen, setFen] = useState(chess.fen());
 
@@ -231,12 +241,29 @@ function App() {
             setTurn('w')
         }
         setFen(chess.fen());
+        setTurn(chess.turn())
         fenToSquaresConvertor(chess.fen())
+    }
+
+
+    const [currentLegalMoves, setCurrentLegalMoves] = useState(null);
+
+    function getLegalMoves(x,y) {
+        const square = positionMap.get(x) + y;
+        const moves = chess.moves({square:square});
+        setCurrentLegalMoves(moves);
+        return moves;
+    }
+
+
+    const updateFen = (newFen) => {
+        setFen(newFen)
     }
 
 
     function fenChangeHandler (fen) {
         fenToSquaresConvertor(fen);
+        chess.load(fen + ' w KQkq - 0 1')
     }
 
     function promotePawn (type,color,x,y){
@@ -246,9 +273,19 @@ function App() {
         setPositions(updatedSquares);
     }
 
-    const updateFen = (newFen) => {
-        setFen(newFen)
+    function setLegalMoves (piece,legalMoves){
+
+        const updatedPositions = [...positions];
+
+        for (let i = 0; i < legalMoves.length; i++){
+            const x = invertedPositionMap.get(legalMoves[i][0]);
+            console.log(x, legalMoves[i][1])
+            const setLegalIndex = positions.findIndex((obj) => obj.x === x && obj.y === parseInt(legalMoves[i][1]) );
+            updatedPositions[setLegalIndex] = {...updatedPositions[setLegalIndex], isLegal: true}
+        }
+        setPositions(updatedPositions)
     }
+
 
 
     return (
@@ -265,6 +302,9 @@ function App() {
                 isSelected={isSelected}
                 setPiece={setSelectedPiece}
                 setIsSelected={setIsSelected}
+                getLegalMoves={getLegalMoves}
+                currentLegalMoves={currentLegalMoves}
+
             />
             <Numbers/>
             <Letters/>

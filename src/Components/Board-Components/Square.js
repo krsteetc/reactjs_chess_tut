@@ -21,19 +21,23 @@ function Square(props) {
         props.onMovePiece(x, y);
     }
 
+
+
     function squareClickHandler() {
         if (!isEmpty) {
             if (!props.isSelected) {
                 if (props.turn === piece.type.split('_')[1][0]) {
                     selectPieceHandler(piece);
                     setIsPieceSelectedHandler(true);
-                    props.onSetLegalMoves(piece);
+                    props.getLegalMoves(piece.x, piece.y)
+                    props.onSetLegalMoves(piece, props.currentLegalMoves);
                 }
             } else {
                 if (props.selectedPiece.type.split('_')[1] === piece.type.split('_')[1][0]) {
                     selectPieceHandler(piece);
                     setIsPieceSelectedHandler(true);
-                    props.onSetLegalMoves(piece);
+                    props.onSetLegalMoves(piece, props.currentLegalMoves);
+
                 }
                 if (props.isLegal) {
                     movePiece(props.x, props.y);
