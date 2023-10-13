@@ -20,8 +20,8 @@
 }
 
 .Square.Highlighted {
-    background-color: #cbf05a;
-    box-shadow: 0 0 4px #cbf05a;
+    background-color: #cbf05a; /* #cbf05a */
+    /* box-shadow: 100px 100px 4px #ff0033;  #cbf05a TO-DO: selected square indicator     */
     transition: background-color 0.4s ease;
 }
 

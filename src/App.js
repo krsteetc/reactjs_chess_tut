@@ -61,6 +61,7 @@ function App() {
     function fenToSquaresConvertor (fen) {
         let fenPositions = [...positions];
         let indexCounter = 0;
+
         for (let i = 0; fen[i] !== ' '; i++) {
             if(fen[i] !== '/'){
                 if(!isNaN(fen[i])){
@@ -241,17 +242,21 @@ function App() {
             setTurn('w')
         }
         setFen(chess.fen());
-        setTurn(chess.turn())
-        fenToSquaresConvertor(chess.fen())
+        setTurn(chess.turn());
+        fenToSquaresConvertor(chess.fen());
+
+       setCurrentLegalMoves(null)
+
     }
 
 
-    const [currentLegalMoves, setCurrentLegalMoves] = useState(null);
+    const [currentLegalMoves, setCurrentLegalMoves] = useState([]);
 
     function getLegalMoves(x,y) {
         const square = positionMap.get(x) + y;
         const moves = chess.moves({square:square});
-        setCurrentLegalMoves(moves);
+        const newLegalMoves = positions.findIndex((obj) => obj.x === x && obj.y === y)
+        setCurrentLegalMoves([newLegalMoves]);
         return moves;
     }
 
@@ -261,9 +266,10 @@ function App() {
     }
 
 
-    function fenChangeHandler (fen) {
-        fenToSquaresConvertor(fen);
-        chess.load(fen + ' w KQkq - 0 1')
+    function fenChangeHandler (newFen) {
+        fenToSquaresConvertor(newFen);
+        setFen(newFen)
+        chess.load(newFen)
     }
 
     function promotePawn (type,color,x,y){
@@ -275,11 +281,11 @@ function App() {
 
     function setLegalMoves (piece,legalMoves){
 
+
         const updatedPositions = [...positions];
 
         for (let i = 0; i < legalMoves.length; i++){
             const x = invertedPositionMap.get(legalMoves[i][0]);
-            console.log(x, legalMoves[i][1])
             const setLegalIndex = positions.findIndex((obj) => obj.x === x && obj.y === parseInt(legalMoves[i][1]) );
             updatedPositions[setLegalIndex] = {...updatedPositions[setLegalIndex], isLegal: true}
         }

@@ -4,6 +4,8 @@ import Piece from './Piece';
 import PawnPromotion from './PawnPromotion';
 
 function Square(props) {
+
+
     const piece = props.squares.find((p) => p.x === props.x && p.y === props.y);
     const isEmpty = !piece || piece.type === 'empty';
 
@@ -24,6 +26,7 @@ function Square(props) {
 
 
     function squareClickHandler() {
+
         if (!isEmpty) {
             if (!props.isSelected) {
                 if (props.turn === piece.type.split('_')[1][0]) {
@@ -39,7 +42,6 @@ function Square(props) {
                     props.onSetLegalMoves(piece, props.currentLegalMoves);
 
                 }
-                if (props.isLegal) {
                     movePiece(props.x, props.y);
                     selectPieceHandler(null);
                     setIsPieceSelectedHandler(false);
@@ -50,11 +52,10 @@ function Square(props) {
                     ) {
                         setShowPawnPromotion(true);
                     }
-                }
+
             }
         } else {
             if (props.isSelected) {
-                if (props.isLegal) {
                     movePiece(props.x, props.y);
                     selectPieceHandler(null);
                     setIsPieceSelectedHandler(false);
@@ -65,7 +66,6 @@ function Square(props) {
                     ) {
                         setShowPawnPromotion(true);
                     }
-                }
             }
         }
     }

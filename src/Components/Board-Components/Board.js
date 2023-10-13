@@ -1,4 +1,4 @@
-import './Board.css'
+ import './Board.css'
 import Square from "./Square";
 import {useState} from "react";
 import {Chess} from "chess.js";
@@ -366,9 +366,6 @@ function Board (props) {
         //     props.onSetLegalMoves(updatedLegalMoves);
 
 
-    const [whiteLegalMoves, setWhiteLegalMoves] = useState(null);
-
-    const [blackLegalMoves, setBlackLegalMoves] = useState(null);
 
 
 
