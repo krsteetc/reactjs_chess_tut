@@ -5,9 +5,13 @@ import PawnPromotion from './PawnPromotion';
 
 function Square(props) {
 
-
+    const currentTurn = props.turn === 'w' ? 'white' : 'black' ;
     const piece = props.squares.find((p) => p.x === props.x && p.y === props.y);
-    const isEmpty = !piece || piece.type === 'empty';
+    const pieceColor = piece.type.split('_')[1]
+    const isSquareEmpty = !piece || piece.type === 'empty';
+    const isAPieceSelected = props.isSelected;
+    const selectedPiece = props.selectedPiece;
+    // const selectedPieceColor = selectedPiece.type.split('_')[1]; fix this
 
     const [showPawnPromotion, setShowPawnPromotion] = useState(false);
 
@@ -23,56 +27,36 @@ function Square(props) {
         props.onMovePiece(x, y);
     }
 
-
-
-    function squareClickHandler() {
-
-        if (!isEmpty) {
-            if (!props.isSelected) {
-                if (props.turn === piece.type.split('_')[1][0]) {
-                    selectPieceHandler(piece);
-                    setIsPieceSelectedHandler(true);
-                    props.getLegalMoves(piece.x, piece.y)
-                    props.onSetLegalMoves(piece, props.currentLegalMoves);
-                }
-            } else {
-                if (props.selectedPiece.type.split('_')[1] === piece.type.split('_')[1][0]) {
-                    selectPieceHandler(piece);
-                    setIsPieceSelectedHandler(true);
-                    props.onSetLegalMoves(piece, props.currentLegalMoves);
-
-                }
-                    movePiece(props.x, props.y);
-                    selectPieceHandler(null);
-                    setIsPieceSelectedHandler(false);
-                    if (
-                        (props.selectedPiece.type.split('_')[0] === 'pawn' &&
-                            props.y === 1) ||
-                        props.selectedPiece.type.split('_')[0] === 'pawn' && props.y === 8
-                    ) {
-                        setShowPawnPromotion(true);
-                    }
-
-            }
-        } else {
-            if (props.isSelected) {
-                    movePiece(props.x, props.y);
-                    selectPieceHandler(null);
-                    setIsPieceSelectedHandler(false);
-                    if (
-                        (props.selectedPiece.type.split('_')[0] === 'pawn' &&
-                            props.y === 1) ||
-                        props.selectedPiece.type.split('_')[0] === 'pawn' && props.y === 8
-                    ) {
-                        setShowPawnPromotion(true);
-                    }
-            }
-        }
-    }
-
-
     function hidePawnPromotion (){
         setShowPawnPromotion(false);
+    }
+
+    function getLegalMoves (piece) {
+        props.getLegalMoves(piece.x, piece.y)
+    }
+
+    function squareClickHandler() {
+        for(let i = 0; i < props.squares.length; i++ ){
+            if(props.squares[i].isLegal){
+                console.log(props.squares[i])
+            }
+        }
+        if(!isSquareEmpty){
+            if(isAPieceSelected){
+                if(selectedPiece.type.split('_')[1] === pieceColor){
+                    selectPieceHandler(piece);
+                    setIsPieceSelectedHandler(true)
+                    getLegalMoves(piece)
+                }
+            }
+            else{
+                if(currentTurn === pieceColor){
+                    selectPieceHandler(piece);
+                    setIsPieceSelectedHandler(true)
+                    getLegalMoves(piece)
+                }
+            }
+        }
     }
 
 
@@ -91,7 +75,7 @@ function Square(props) {
             }`}
             onClick={squareClickHandler}
         >
-            {!isEmpty && <Piece type={piece.type} />}
+            {!isSquareEmpty && <Piece type={piece.type} />}
             {showPawnPromotion && <PawnPromotion color={piece.type.split('_')[1]} square={piece} promotePawn={props.promotePawn} hidePawnPromotion={hidePawnPromotion} />}
         </div>
     );
