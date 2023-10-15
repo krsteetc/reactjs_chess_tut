@@ -36,17 +36,15 @@ function Square(props) {
     }
 
     function squareClickHandler() {
-        // for(let i = 0; i < props.squares.length; i++ ){
-        //     if(props.squares[i].isLegal){
-        //         console.log(props.squares[i])
-        //     }
-        // }
         if(!isSquareEmpty){
             if(isAPieceSelected){
-                if(selectedPiece.type.split('_')[1] === pieceColor){
+                if(currentTurn === pieceColor){
                     selectPieceHandler(piece);
                     setIsPieceSelectedHandler(true)
                     getLegalMoves(piece)
+                }
+                else if(props.isLegal){
+                    movePiece(piece.x, piece.y)
                 }
             }
             else{
@@ -55,6 +53,12 @@ function Square(props) {
                     setIsPieceSelectedHandler(true)
                     getLegalMoves(piece)
                 }
+            }
+        }
+        else{
+            if(props.isLegal){
+                movePiece(piece.x, piece.y)
+
             }
         }
     }

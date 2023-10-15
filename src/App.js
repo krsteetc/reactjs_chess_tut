@@ -93,8 +93,6 @@ function App() {
 
     const [isSelected, setIsSelected] = useState(false);
 
-    const [currentLegalMoves, setCurrentLegalMoves] = useState([]);
-
 
     // FUNCTIONS
 
@@ -184,6 +182,7 @@ function App() {
 
         const from = positionMap.get(selectedPiece.x) + selectedPiece.y;
         const to = positionMap.get(x) + y;
+        const updatedPositions = positions;
         chess.move({from:from, to:to})
         if(turn === 'w'){
             setTurn('b')
@@ -195,7 +194,16 @@ function App() {
         setTurn(chess.turn());
         fenToSquaresConvertor(chess.fen());
 
-       setCurrentLegalMoves([])
+       setSelectedPiece(null);
+       setIsSelected(false);
+        for (let i = 0; i < positions.length; i++){
+            updatedPositions[i] = {...updatedPositions[i], isLegal: false}
+        }
+        setPositions(updatedPositions)
+
+        if(chess.isGameOver()){
+            console.log("GAME OVER")
+        }
 
     }
 
@@ -204,6 +212,7 @@ function App() {
         const moves = chess.moves({square:square});
         const updatedPositions = [...positions];
 
+
         const legalMoveIndices = moves.map((move) => {
             const numberIndex = move.search(/\d/); // searches for the index of the number in the move string (Ex. index of 3 in Qb3)
             const letterIndex = numberIndex - 1;
@@ -211,9 +220,8 @@ function App() {
             const yCoordinate = parseInt(move[numberIndex]);
            return  positions.findIndex((obj) => obj.x === xCoordinate && obj.y === yCoordinate)
         })
-
         for (let i = 0; i < positions.length; i++){
-            if(i === legalMoveIndices[0] || i === legalMoveIndices[1]){
+            if(legalMoveIndices.includes(i)){
                 updatedPositions[i] = {...updatedPositions[i], isLegal: true}
             }
             else{
@@ -228,10 +236,19 @@ function App() {
     } //updates the fen in the FEN component
 
     function fenChangeHandler (newFen) {
+        const updatedPositions = [...positions];
+
         fenToSquaresConvertor(newFen);
         setFen(newFen)
         chess.load(newFen)
         setTurn(newFen[newFen.indexOf(' ') + 1])
+
+        setIsSelected(false);
+        setSelectedPiece(null)
+        for (let i = 0; i < positions.length; i++){
+            updatedPositions[i] = {...updatedPositions[i], isLegal: false}
+        }
+        setPositions(updatedPositions)
     } //updates the board with the new user-inputted fen and feeds the fen to the game engine
 
     function promotePawn (type,color,x,y){
@@ -256,7 +273,6 @@ function App() {
                 setPiece={setSelectedPiece}
                 setIsSelected={setIsSelected}
                 getLegalMoves={getLegalMoves}
-                currentLegalMoves={currentLegalMoves}
             />
             <Numbers/>
             <Letters/>

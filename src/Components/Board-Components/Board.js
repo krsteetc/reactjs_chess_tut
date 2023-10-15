@@ -4,7 +4,6 @@ import Square from "./Square";
 
 function Board (props) {
 
-    const currentLegalMoves = props.currentLegalMoves;
     const turn = props.turn;
     const selectedPiece = props.selectedPiece;
     const isSelected = props.isSelected;
@@ -49,7 +48,6 @@ function Board (props) {
                     onSetLegalMoves={setLegalMoves}
                     promotePawn={props.promotePawn}
                     getLegalMoves={props.getLegalMoves}
-                    currentLegalMoves={currentLegalMoves}
                 />
             )}
         </div>
