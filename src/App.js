@@ -195,7 +195,7 @@ function App() {
         setTurn(chess.turn());
         fenToSquaresConvertor(chess.fen());
 
-       setCurrentLegalMoves(null)
+       setCurrentLegalMoves([])
 
     }
 
@@ -209,19 +209,19 @@ function App() {
             const letterIndex = numberIndex - 1;
             const xCoordinate = invertedPositionMap.get(move[letterIndex]); // convert alphabetic to numerical coordinate
             const yCoordinate = parseInt(move[numberIndex]);
-
            return  positions.findIndex((obj) => obj.x === xCoordinate && obj.y === yCoordinate)
         })
 
-        for (const index in legalMoveIndices){
-            updatedPositions[index] = {...updatedPositions[index], isLegal: true}
+        for (let i = 0; i < positions.length; i++){
+            if(i === legalMoveIndices[0] || i === legalMoveIndices[1]){
+                updatedPositions[i] = {...updatedPositions[i], isLegal: true}
+            }
+            else{
+                updatedPositions[i] = {...updatedPositions[i], isLegal: false}
+            }
         }
-
-
         setPositions(updatedPositions)
-
-
-    } //returns the legal moves for a given piece (coordinates on the board) and sets them
+    } //returns the legal moves for a given piece (coordinates on the board) and sets them as legal
 
     const updateFen = (newFen) => {
         setFen(newFen)
