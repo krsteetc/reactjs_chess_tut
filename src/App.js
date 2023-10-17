@@ -2,7 +2,7 @@ import Board from "./Components/Board-Components/Board";
 import './App.css';
 import Numbers from "./Components/Board-Components/Numbers";
 import Letters from "./Components/Board-Components/Letters";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import FEN from "./Components/FEN-Components/FEN";
 import {Chess} from "chess.js";
 
@@ -79,7 +79,7 @@ function App() {
 
     // STATE HOOKS
 
-    const [chess, setChess] = useState(new Chess());
+    const [chess] = useState(new Chess());
 
     const [positions, setPositions] = useState(initialPositions);
 
@@ -220,6 +220,15 @@ function App() {
             const yCoordinate = parseInt(move[numberIndex]);
            return  positions.findIndex((obj) => obj.x === xCoordinate && obj.y === yCoordinate)
         })
+
+        if(moves.includes('O-O') || moves.includes('0-0-0')){ //check if either king side or queen side castling is available
+            if(moves.includes('O-O')){
+                legalMoveIndices.push(positions.findIndex((obj)=> obj.x === x + 2 && obj.y === y )) //legalizes square for king-side castling
+            }
+            if(moves.includes('O-O-O')){
+                legalMoveIndices.push(positions.findIndex((obj)=> obj.x === x - 2 && obj.y === y )) //legalizes square for queen-side castling
+            }
+        }
         for (let i = 0; i < positions.length; i++){
             if(legalMoveIndices.includes(i)){
                 updatedPositions[i] = {...updatedPositions[i], isLegal: true}

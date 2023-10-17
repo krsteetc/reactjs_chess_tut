@@ -10,7 +10,6 @@ function Square(props) {
     const pieceColor = piece.type.split('_')[1]
     const isSquareEmpty = !piece || piece.type === 'empty';
     const isAPieceSelected = props.isSelected;
-    const selectedPiece = props.selectedPiece;
     // const selectedPieceColor = selectedPiece.type.split('_')[1]; fix this
 
     const [showPawnPromotion, setShowPawnPromotion] = useState(false);
@@ -40,8 +39,8 @@ function Square(props) {
             if(isAPieceSelected){
                 if(currentTurn === pieceColor){
                     selectPieceHandler(piece);
-                    setIsPieceSelectedHandler(true)
-                    getLegalMoves(piece)
+                    setIsPieceSelectedHandler(true);
+                    getLegalMoves(piece);
                 }
                 else if(props.isLegal){
                     movePiece(piece.x, piece.y)
@@ -58,7 +57,6 @@ function Square(props) {
         else{
             if(props.isLegal){
                 movePiece(piece.x, piece.y)
-
             }
         }
     }
