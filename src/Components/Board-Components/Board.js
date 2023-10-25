@@ -7,8 +7,7 @@ function Board (props) {
     const turn = props.turn;
     const selectedPiece = props.selectedPiece;
     const isSelected = props.isSelected;
-
-
+    
     function selectPiece(piece){
         props.setPiece(piece);
     }
@@ -19,11 +18,10 @@ function Board (props) {
         props.onMovePiece(x,y,selectedPiece)
     }
 
-    function setLegalMoves(piece, currentLegalMoves) {
+    function setLegalMoves(piece) {
         const legalMoves = props.getLegalMoves(piece.x, piece.y);
         props.onSetLegalMoves(piece, legalMoves)
     }
-
 
 
     return (
@@ -48,6 +46,7 @@ function Board (props) {
                     onSetLegalMoves={setLegalMoves}
                     promotePawn={props.promotePawn}
                     getLegalMoves={props.getLegalMoves}
+                    previouslySelectedSquare={props.previouslySelectedSquare}
                 />
             )}
         </div>

@@ -10,7 +10,7 @@ function Square(props) {
     const pieceColor = piece.type.split('_')[1]
     const isSquareEmpty = !piece || piece.type === 'empty';
     const isAPieceSelected = props.isSelected;
-    // const selectedPieceColor = selectedPiece.type.split('_')[1]; fix this
+    const isHighlighted = piece.isHighlighted;
 
     const [showPawnPromotion, setShowPawnPromotion] = useState(false);
 
@@ -35,6 +35,7 @@ function Square(props) {
     }
 
     function squareClickHandler() {
+        console.log(piece)
         if(!isSquareEmpty){
             if(isAPieceSelected){
                 if(currentTurn === pieceColor){
@@ -71,10 +72,13 @@ function Square(props) {
             } ${
                 props.selectedPiece &&
                 props.selectedPiece.x === parseInt(props.x) &&
-                props.selectedPiece.y === parseInt(props.y)
+                props.selectedPiece.y === parseInt(props.y) ||
+                isHighlighted
                     ? 'Highlighted'
                     : ''
-            }`}
+            }
+           
+            `}
             onClick={squareClickHandler}
         >
             {!isSquareEmpty && <Piece type={piece.type} />}
