@@ -8,21 +8,25 @@
 }
 
 .Square:hover{
-    box-shadow: 0 0 10px #cbf05a;
+    /*box-shadow: 0 0 10px #cbf05a;*/
+    scale: 104%;
 }
 
 .Square.Dark {
     background-color:#7f5af0;
+    transition: background-color 0.4s ease-in-out;
 }
 
 .Square.Light {
     background-color: #fffffe;
+    transition: background-color 0.4s ease-in-out;
 }
 
 .Square.Highlighted {
     background-color: #cbf05a; /* #cbf05a */
     /* box-shadow: 100px 100px 4px #ff0033;  #cbf05a TO-DO: selected square indicator     */
     transition: background-color 0.4s ease;
+    border-bottom: black 10px;
 }
 
 .Square.Legal{
@@ -37,9 +41,5 @@
     0 0 10px #F05A80,
     0 0 10px #F05A80,
     0 0 10px #F05A80;
-}
-
-.Square.Previous {
-    background-color: #fffe00;
 }
 

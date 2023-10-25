@@ -271,6 +271,14 @@ function App() {
         setPositions(updatedSquares);
     }  //may be removed
 
+    function squareHighlighter(square){
+        const squareIndex = positions.findIndex((obj) => obj.x === square.x && obj.y === square.y)
+        const updatedPositions = [...positions];
+        const setHighlight = updatedPositions[squareIndex].isHighlighted !== true;
+        updatedPositions[squareIndex] = {...updatedPositions[squareIndex], isHighlighted: setHighlight }
+        setPositions(updatedPositions)
+    }
+
 
     return (
         <div className='App'>
@@ -286,6 +294,7 @@ function App() {
                 setPiece={setSelectedPiece}
                 setIsSelected={setIsSelected}
                 getLegalMoves={getLegalMoves}
+                squareHighlighter={squareHighlighter}
             />
             <Numbers/>
             <Letters/>

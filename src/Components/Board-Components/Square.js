@@ -34,8 +34,12 @@ function Square(props) {
         props.getLegalMoves(piece.x, piece.y)
     }
 
+    function squareHighlighter(e){
+        e.preventDefault();
+        props.squareHighlighter(piece)
+    }
+
     function squareClickHandler() {
-        console.log(piece)
         if(!isSquareEmpty){
             if(isAPieceSelected){
                 if(currentTurn === pieceColor){
@@ -80,6 +84,7 @@ function Square(props) {
            
             `}
             onClick={squareClickHandler}
+            onContextMenu={squareHighlighter}
         >
             {!isSquareEmpty && <Piece type={piece.type} />}
             {showPawnPromotion && <PawnPromotion color={piece.type.split('_')[1]} square={piece} promotePawn={props.promotePawn} hidePawnPromotion={hidePawnPromotion} />}

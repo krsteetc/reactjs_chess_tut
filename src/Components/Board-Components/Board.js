@@ -47,6 +47,7 @@ function Board (props) {
                     promotePawn={props.promotePawn}
                     getLegalMoves={props.getLegalMoves}
                     previouslySelectedSquare={props.previouslySelectedSquare}
+                    squareHighlighter={props.squareHighlighter}
                 />
             )}
         </div>
