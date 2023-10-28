@@ -269,6 +269,7 @@ function App() {
         const promotedPawn = positions.findIndex((obj) => obj.x === x && obj.y === y);
         updatedSquares[promotedPawn] = {...updatedSquares[promotedPawn], type: `${type}_${color}`, isEmpty: false};
         setPositions(updatedSquares);
+        //namesto pionot da odi na posledniot rank treba da se stavi pionot za promocija
     }  //may be removed
 
     function squareHighlighter(square){

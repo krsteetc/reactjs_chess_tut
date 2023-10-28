@@ -34,7 +34,8 @@ function PawnPromotion (props){
             <div className={"Bishop PromoteButton"}  onClick={promotePawnToBishop} ><img src={`/piece-images/bishop_${color}.png` } alt={'Bishop'}></img></div>
             <div className={"Knight PromoteButton"} onClick={promotePawnToKnight} ><img src={`/piece-images/knight_${color}.png` } alt={'Knight'}></img></div>
         </div>
-    )
+                
+    );
 
 }
 

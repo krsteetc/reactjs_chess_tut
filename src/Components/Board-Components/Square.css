@@ -23,23 +23,33 @@
 }
 
 .Square.Highlighted {
-    background-color: #cbf05a; /* #cbf05a */
+    /* background-color: red; */
+    background-color: #cbf05a; /*  #cbf05a */
     /* box-shadow: 100px 100px 4px #ff0033;  #cbf05a TO-DO: selected square indicator     */
     transition: background-color 0.4s ease;
     border-bottom: black 10px;
 }
 
 .Square.Legal{
-    box-shadow: 0 0 5px #cbf05a,
+    background-image: url("/public/grayCircle.png");
+    background-size: 80% 80%;
+    background-position: center center;
+
+    /* box-shadow: 0 0 5px #cbf05a,
     0 0 10px #cbf05a,
     0 0 10px #cbf05a,
-    0 0 10px #cbf05a;
+    0 0 10px #cbf05a; */
 }
 
 .Square.Attacked {
-    box-shadow: 0 0 5px #F05A80,
+    background-image: url("/public/yellowCircle.png");
+    background-position: center center;
+    background-size: 120% 120%;
+    background-repeat: no-repeat;
+
+    /* box-shadow: 0 0 5px #F05A80,
     0 0 10px #F05A80,
     0 0 10px #F05A80,
-    0 0 10px #F05A80;
+    0 0 10px #F05A80; */
 }
 
