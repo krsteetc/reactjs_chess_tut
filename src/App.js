@@ -218,6 +218,7 @@ function App() {
         const moves = chess.moves({square: square});
         const updatedPositions = [...positions];
 
+
         const legalMoveIndices = moves.map((move) => {
             const numberIndex = move.search(/\d/); // searches for the index of the number in the move string (Ex. index of 3 in Qb3)
             const letterIndex = numberIndex - 1;
@@ -264,13 +265,17 @@ function App() {
         setPositions(updatedPositions)
     } //updates the board with the new user-inputted fen and feeds the fen to the game engine
 
-    function promotePawn(type, color, x, y) {
-        const updatedSquares = [...positions];
-        const promotedPawn = positions.findIndex((obj) => obj.x === x && obj.y === y);
-        updatedSquares[promotedPawn] = {...updatedSquares[promotedPawn], type: `${type}_${color}`, isEmpty: false};
-        setPositions(updatedSquares);
-        //namesto pionot da odi na posledniot rank treba da se stavi pionot za promocija
-    }  //may be removed
+    function promotePawn(type,x,y,n) {
+        y = y === 8 ? 7 : 2;
+        const square = positionMap.get(x) + y;
+        const moves = chess.moves({square: square})
+        chess.move(moves[n])
+        setFen(chess.fen());
+        setTurn(chess.turn());
+        fenToSquaresConvertor(chess.fen());
+        setSelectedPiece(null);
+        setIsSelected(false);
+    }
 
     function squareHighlighter(square){
         const squareIndex = positions.findIndex((obj) => obj.x === square.x && obj.y === square.y)

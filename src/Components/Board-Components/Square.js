@@ -4,6 +4,7 @@ import Piece from './Piece';
 import PawnPromotion from './PawnPromotion';
 
 function Square(props) {
+  const selectedPiece = props.selectedPiece
   const currentTurn = props.turn === 'w' ? 'white' : 'black';
   const piece = props.squares.find((p) => p.x === props.x && p.y === props.y);
   const pieceColor = piece.type.split('_')[1];
@@ -25,10 +26,6 @@ function Square(props) {
     props.onMovePiece(x, y);
   }
 
-  function hidePawnPromotion() {
-    setShowPawnPromotion(false);
-  }
-
   function getLegalMoves(piece) {
     props.getLegalMoves(piece.x, piece.y);
   }
@@ -39,11 +36,11 @@ function Square(props) {
   }
 
   function squareClickHandler() {
-    if (piece.type === 'pawn' && ((currentTurn === 'white' && piece.y === 6) || (currentTurn === 'black' && piece.y === 1))) {
-        // Display pawn promotion options
+    if(selectedPiece){
+      if (selectedPiece.type.split('_')[0] === 'pawn' && ((currentTurn === 'white' && piece.y === 8) || (currentTurn === 'black' && piece.y === 1))) { // promotion edge case handling
         setShowPawnPromotion(true);
-      } 
-
+      }
+    }
     if (!isSquareEmpty) {
       if (isAPieceSelected) {
         if (currentTurn === pieceColor) {
@@ -89,14 +86,9 @@ function Square(props) {
         <PawnPromotion
           color={pieceColor}
           square={piece}
-          promotePawn={(pieceType) => {
-            // Implement your pawn promotion logic here
-            // You can pass the pieceType to your game logic for pawn promotion
-            // For example: 
-            props.promotePawn(pieceType, pieceColor, piece.x, piece.y);
-            hidePawnPromotion();
-          }}
-        //   hidePawnPromotion={hidePawnPromotion}
+          promotePawn={props.promotePawn}
+          pawnpromotion = {showPawnPromotion}
+          setShowPawnPromotion={setShowPawnPromotion}
         />
       )}
     </div>
