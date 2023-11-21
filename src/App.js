@@ -265,11 +265,18 @@ function App() {
         setPositions(updatedPositions)
     } //updates the board with the new user-inputted fen and feeds the fen to the game engine
 
-    function promotePawn(type,x,y,n) {
-        y = y === 8 ? 7 : 2;
+    function promotionMoveFinder(letter,movesArray) {
+       for(let i = 0; i < movesArray.length; i++) {
+           if(movesArray[i].split('=')[1].includes(letter)){ //checks if the move after the "=" contains the letter. Ex. if (h8=B => B) contains the letter R. We check it this way because there might be an edge case where we have the letter in the square position, ex. b7, and we choose to promote to queen, but instead it promotes to bishop because of the B in the move itself
+               return movesArray[i]
+           }
+       }
+    }
+
+    function promotePawn(letter,x,y) {
         const square = positionMap.get(x) + y;
         const moves = chess.moves({square: square})
-        chess.move(moves[n])
+        chess.move(promotionMoveFinder(letter,moves))
         setFen(chess.fen());
         setTurn(chess.turn());
         fenToSquaresConvertor(chess.fen());

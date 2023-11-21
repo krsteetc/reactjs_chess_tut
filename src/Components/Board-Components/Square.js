@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './Square.css';
 import Piece from './Piece';
 import PawnPromotion from './PawnPromotion';
@@ -18,6 +18,11 @@ function Square(props) {
     props.onSelectPiece(piece);
   }
 
+  function hidePawnPromotion () {
+    console.log('triggered')
+    setShowPawnPromotion(false)
+  }
+
   function setIsPieceSelectedHandler(isTrue) {
     props.onSetIsPieceSelected(isTrue);
   }
@@ -34,6 +39,7 @@ function Square(props) {
     e.preventDefault();
     props.squareHighlighter(piece);
   }
+
 
   function squareClickHandler() {
     if(selectedPiece){
@@ -84,11 +90,10 @@ function Square(props) {
       {!isSquareEmpty && <Piece type={piece.type} />}
       {showPawnPromotion && (
         <PawnPromotion
-          color={pieceColor}
+          color={currentTurn}
           square={piece}
           promotePawn={props.promotePawn}
-          pawnpromotion = {showPawnPromotion}
-          setShowPawnPromotion={setShowPawnPromotion}
+          hidePawnPromotion={hidePawnPromotion}
         />
       )}
     </div>
