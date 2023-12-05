@@ -1,12 +1,8 @@
- import './Board.css'
+import './Board.css'
 import Square from "./Square";
-
 
 function Board (props) {
 
-    const turn = props.turn;
-    const selectedPiece = props.selectedPiece;
-    const isSelected = props.isSelected;
     
     function selectPiece(piece){
         props.setPiece(piece);
@@ -15,7 +11,7 @@ function Board (props) {
        props.setIsSelected(isTrue);
     }
     function movePiece(x,y) {
-        props.onMovePiece(x,y,selectedPiece)
+        props.onMovePiece(x,y)
     }
 
     function setLegalMoves(piece) {
@@ -32,15 +28,15 @@ function Board (props) {
                     y={square.y}
                     type={square.type}
                     isEmpty={square.isEmpty}
-                    isSelected={isSelected}
+                    isSelected={props.isSelected}
                     key={`${square.x}-${square.y}`}
                     squares={props.squares}
                     onSelectPiece={selectPiece}
                     onSetIsPieceSelected={isPieceSelected}
                     onMovePiece={movePiece}
                     isSquareDark={square.isDark}
-                    selectedPiece={selectedPiece}
-                    turn={turn}
+                    selectedPiece={props.selectedPiece}
+                    turn={props.turn}
                     setTurn={props.setTurn}
                     isLegal={square.isLegal}
                     onSetLegalMoves={setLegalMoves}

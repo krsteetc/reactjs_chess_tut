@@ -19,7 +19,6 @@ function Square(props) {
   }
 
   function hidePawnPromotion () {
-    console.log('triggered')
     setShowPawnPromotion(false)
   }
 

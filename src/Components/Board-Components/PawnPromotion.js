@@ -3,7 +3,7 @@ import './PawnPromotion.css';
 
 function PawnPromotion (props){
 
-    const color = props.color; //null
+    const color = props.color;
     const x = props.square.x;
     const y = props.square.y === 8 ? 7 : 2;
 
