@@ -1,5 +1,6 @@
 import React, {forwardRef, useRef, useImperativeHandle} from 'react';
 import './Modal.css'
+import {createPortal} from "react-dom";
 
 const Modal = forwardRef(function Modal({winner, result}, ref){
 
@@ -14,7 +15,7 @@ const Modal = forwardRef(function Modal({winner, result}, ref){
         }
     } )
 
-    return (
+    return createPortal(
         <dialog ref={dialogRef} className="modal">
             <div className="modal-content">
                 <h1>Game Over!</h1>
@@ -23,7 +24,8 @@ const Modal = forwardRef(function Modal({winner, result}, ref){
                 </p>
                 <button onClick={() => window.location.reload()}>Play again</button>
             </div>
-        </dialog>
+        </dialog>,
+        document.getElementById('modal')
     );
 })
 
