@@ -15,19 +15,10 @@ function FEN (props) {
 
     const [localFen, setLocalFen] = useState(props.fen || '');
 
-    //write fen validity checking function
-
 
     function onSubmitHandler (event) {
         event.preventDefault();
-        // if (isFenValid(localFen)){
             props.onFenChange(localFen)
-        // }
-        // else {
-        //     console.log('INVALID FEN')
-        //     //Handle invalid, neshto takvo da izlezi kako prozorche primer ili neshto taka
-        // }
-
     }
 
     return (

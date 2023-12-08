@@ -2,12 +2,12 @@ import Board from "./Components/Board-Components/Board";
 import './App.css';
 import Numbers from "./Components/Board-Components/Numbers";
 import Letters from "./Components/Board-Components/Letters";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import FEN from "./Components/FEN-Components/FEN";
 import {Chess} from "chess.js";
 import {initialPositions,invertedPositionMap,positionMap} from "./utils";
+import Modal from "./Components/Error-Modals/Modal";
 
-// TO DO: implement useRef in FEN.js
 
 function App() {
 
@@ -26,6 +26,12 @@ function App() {
     const [selectedPiece, setSelectedPiece] = useState(null);// currently selected piece
 
     const [isSelected, setIsSelected] = useState(false); //is a piece currently selected
+
+    const [result, setResult] = useState('');
+
+    const [winner, setWinner] = useState('');
+
+    const gameOverModalRef = useRef();
 
     // FUNCTIONS
 
@@ -117,6 +123,10 @@ function App() {
         }
     } //when promoting a pawn, it searches for the correct promotion piece type move from the library
 
+    function showGameOverModal (){
+        gameOverModalRef.current.show()
+    }
+
     function movePiece(x, y) {
 
         const previousSquareIndex = positions.findIndex((obj) => obj.x === selectedPiece.x && obj.y === selectedPiece.y) //finds the index of the square where the piece was located prior the move in order to highlight it
@@ -148,10 +158,22 @@ function App() {
         setPositions(updatedPositions)
 
         if (chess.isGameOver()) {
-            console.log("GAME OVER")
-        }
+            if (chess.isDraw()){
+                setResult('Draw')
+            }
+            if(chess.isStalemate()){
+                setResult("Stalemate")
+            }
 
+            if(chess.isCheckmate()){
+                setWinner(
+                    turn === 'w' ? 'White' : 'Black'
+                )
+            }
+            showGameOverModal()
+        }
     }
+
 
     function getLegalMoves(x, y) {
         const square = positionMap.get(x) + y;
@@ -185,7 +207,6 @@ function App() {
         setPositions(updatedPositions)
     } //returns the legal moves for a given piece (coordinates on the board) and sets them as legal
 
-
     function fenChangeHandler(newFen) {
         const updatedPositions = [...positions];
 
@@ -201,8 +222,6 @@ function App() {
         }
         setPositions(updatedPositions)
     } //updates the board with the new user-inputted fen and feeds the fen to the game engine
-
-
 
     function promotePawn(letter,x,y) {
         const square = positionMap.get(x) + y;
@@ -226,6 +245,7 @@ function App() {
 
     return (
         <div className='App'>
+            <Modal ref={gameOverModalRef} result={result} winner={winner} />
             <Board
                 squares={positions}
                 onMovePiece={movePiece}
