@@ -1,0 +1,18 @@
+.Container {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Box{
+    padding: 20px;
+    margin: 20%;
+    border: black solid 3px;
+}
+
+.Box:hover {
+    scale: 120%;
+    transition: ease-in-out;
+    transition-duration: 200ms;
+}
