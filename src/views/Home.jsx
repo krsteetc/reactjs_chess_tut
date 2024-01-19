@@ -5,12 +5,12 @@ export function Home() {
         <div className="Container">
             <div className="Box">
                 <h1>
-                    <NavLink to="/game">Game</NavLink>
+                    <NavLink to="/game" className="modeTitle">Game</NavLink>
                 </h1>
             </div>
             <div className="Box">
                 <h1>
-                    <NavLink to="/tutorials">Tutorials</NavLink>
+                    <NavLink to="/tutorials" className="modeTitle">Tutorials</NavLink>
                 </h1>
             </div>
         </div>

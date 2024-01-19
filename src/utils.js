@@ -66,4 +66,85 @@ const invertedPositionMap = new Map([  //used for converting chess-like format t
     ['h', 8],
 ]);
 
-export {initialPositions,positionMap,invertedPositionMap}
+function fenToSquaresConvertor(fen, squares) {
+    let fenPositions = [...squares];
+    let indexCounter = 0;
+
+    for (let i = 0; fen[i] !== ' '; i++) {
+        if (fen[i] !== '/') {
+            if (!isNaN(fen[i])) {
+                for (let j = 0; j < parseInt(fen[i]); j++) {
+                    fenPositions[indexCounter].type = 'empty';
+                    fenPositions[indexCounter].isEmpty = true;
+                    indexCounter += 1;
+                }
+            } else {
+                switch (fen[i]) {
+                    case 'p':
+                        fenPositions[indexCounter].type = 'pawn_black'
+                        fenPositions[indexCounter].isEmpty = false;
+                        indexCounter += 1;
+                        break;
+                    case 'r':
+                        fenPositions[indexCounter].type = 'rook_black'
+                        fenPositions[indexCounter].isEmpty = false;
+                        indexCounter += 1;
+                        break;
+                    case 'n':
+                        fenPositions[indexCounter].type = 'knight_black'
+                        fenPositions[indexCounter].isEmpty = false;
+                        indexCounter += 1;
+                        break;
+                    case 'b':
+                        fenPositions[indexCounter].type = 'bishop_black'
+                        fenPositions[indexCounter].isEmpty = false;
+                        indexCounter += 1;
+                        break;
+                    case 'q':
+                        fenPositions[indexCounter].type = 'queen_black'
+                        fenPositions[indexCounter].isEmpty = false;
+                        indexCounter += 1;
+                        break;
+                    case 'k':
+                        fenPositions[indexCounter].type = 'king_black'
+                        fenPositions[indexCounter].isEmpty = false;
+                        indexCounter += 1;
+                        break;
+                    case 'P':
+                        fenPositions[indexCounter].type = 'pawn_white'
+                        fenPositions[indexCounter].isEmpty = false;
+                        indexCounter += 1;
+                        break;
+                    case 'R':
+                        fenPositions[indexCounter].type = 'rook_white'
+                        fenPositions[indexCounter].isEmpty = false;
+                        indexCounter += 1;
+                        break;
+                    case 'N':
+                        fenPositions[indexCounter].type = 'knight_white'
+                        fenPositions[indexCounter].isEmpty = false;
+                        indexCounter += 1;
+                        break;
+                    case 'B':
+                        fenPositions[indexCounter].type = 'bishop_white'
+                        fenPositions[indexCounter].isEmpty = false;
+                        indexCounter += 1;
+                        break;
+                    case 'Q':
+                        fenPositions[indexCounter].type = 'queen_white'
+                        fenPositions[indexCounter].isEmpty = false;
+                        indexCounter += 1;
+                        break;
+                    case 'K':
+                        fenPositions[indexCounter].type = 'king_white'
+                        fenPositions[indexCounter].isEmpty = false;
+                        indexCounter += 1;
+                        break;
+                }
+            }
+        }
+    }
+    return fenPositions
+}
+
+export {initialPositions,positionMap,invertedPositionMap,fenToSquaresConvertor}

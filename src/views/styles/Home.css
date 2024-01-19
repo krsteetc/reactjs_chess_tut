@@ -16,3 +16,9 @@
     transition: ease-in-out;
     transition-duration: 200ms;
 }
+
+.modeTitle {
+    text-decoration: none;
+    color: black;
+    caret-color: transparent;
+}
