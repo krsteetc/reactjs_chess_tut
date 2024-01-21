@@ -8,9 +8,14 @@ function PawnPromotion (props){
     const y = props.square.y === 8 ? 7 : 2;
 
 
-    async function promotePawn(letter, x, y) {
-        await props.promotePawn(letter, x, y);
-        props.hidePawnPromotion();
+    // async function promotePawn(letter, x, y) {
+    //     await props.promotePawn(letter, x, y);
+    //     props.hidePawnPromotion();
+    // }
+
+     function promotePawn(letter, x, y) {
+         props.promotePawn(letter, x, y);
+         props.hidePawnPromotion();
     }
 
 

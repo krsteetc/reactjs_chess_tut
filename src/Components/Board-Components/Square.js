@@ -41,7 +41,7 @@ function Square(props) {
 
 
   function squareClickHandler() {
-    if(selectedPiece){
+    if(selectedPiece && !showPawnPromotion){
       if (selectedPiece.type.split('_')[0] === 'pawn' && ((currentTurn === 'white' && piece.y === 8) || (currentTurn === 'black' && piece.y === 1))) { // promotion edge case handling
         setShowPawnPromotion(true);
       }
