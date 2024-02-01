@@ -4,7 +4,6 @@ import {Route, Routes} from "react-router-dom";
 import {Game} from "./views/Game";
 import {Tutorials} from "./views/Tutorials";
 
-
 function App() {
     return (
             <Routes>
@@ -15,8 +14,5 @@ function App() {
             </Routes>
     )
 }
-
-
-
 
 export default App;

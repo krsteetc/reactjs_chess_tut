@@ -2,8 +2,6 @@ import './Board.css'
 import Square from "./Square";
 
 function Board (props) {
-
-    
     function selectPiece(piece){
         props.setPiece(piece);
     }
@@ -13,13 +11,10 @@ function Board (props) {
     function movePiece(x,y) {
         props.onMovePiece(x,y)
     }
-
     function setLegalMoves(piece) {
         const legalMoves = props.getLegalMoves(piece.x, piece.y);
         props.onSetLegalMoves(piece, legalMoves)
     }
-
-
     return (
         <div className="board-card">
             {props.squares.map(

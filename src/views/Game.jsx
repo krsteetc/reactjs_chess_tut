@@ -1,4 +1,4 @@
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Chess} from "chess.js";
 import {initialPositions} from "../utils";
 import Modal from "../Components/Error-Modals/Modal";
@@ -11,6 +11,8 @@ import {invertedPositionMap} from "../utils"
 
 
 export function Game() {
+
+
     // STATE HOOKS
 
     const [chess] = useState(new Chess()); //instantiates a new game from the chess.js library
@@ -32,6 +34,10 @@ export function Game() {
     const [winner, setWinner] = useState('');
 
     const gameOverModalRef = useRef();
+
+    useEffect(() => {
+        fenToSquaresConvertor(chess.fen(), positions, setPositions)
+    }, []);
 
     // FUNCTIONS
 
